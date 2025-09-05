@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QuickAid — Result</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/js/languages.js"></script>
+</head>
+<body class="app-pharma">
+  <header class="qa-header">
+    <div class="container header-inner">
+      <div class="header-left">
+        <div class="brand">
+          <a class="brand-link" href="index.html"><span class="logo" aria-hidden="true">🫀</span><span class="brand-name">Pocket Doctor</span></a>
+        </div>
+        <div class="header-meta">
+          <span class="pill pill-green">HIPAA Compliant</span>
+          <span class="pill pill-pink">24/7 Available</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a class="btn btn-accent" href="wellness.html" data-translate="wellness">❤ Wellness</a>
+        <button class="btn btn-ghost" data-lang-toggle type="button">🌐 EN</button>
+        <button class="btn btn-ghost" data-toggle-theme type="button" data-translate="theme">🌙 Theme</button>
+        <a class="btn btn-outline" href="login.html" data-translate="login">🔐 Login</a>
+        <a class="btn btn-primary-gradient" href="register.html" data-translate="register">👤 Register</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <h1 class="text-gradient" style="margin:0 0 16px;" data-translate="ai-analysis-result">Your Result</h1>
+        <div id="result-card" class="card result">
+          <div class="risk-badge" id="risk-badge">Risk</div>
+          <div class="result-detail">
+            <div class="result-line"><span class="muted">Symptom:</span> <span id="res-symptom"></span></div>
+            <div class="result-line"><span class="muted">Intensity:</span> <span id="res-intensity"></span></div>
+            <div class="result-line"><span class="muted">Duration:</span> <span id="res-duration"></span></div>
+          </div>
+          <div class="suggestion">
+            <span class="icon" id="suggestion-icon">ℹ️</span>
+            <span id="suggestion-text"></span>
+          </div>
+          <div class="actions">
+            <a class="btn" href="#" id="find-help">Find Nearby Help</a>
+            <a class="btn btn-danger" href="#" id="sos">SOS</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pd-footer">
+    <div class="container pd-footer-top">
+      <div class="pd-brand">
+        <div class="pd-logo">🫀</div>
+        <div>
+          <div class="pd-name">Pocket Doctor</div>
+          <div class="pd-tagline" data-translate="medical-disclaimer">Not a substitute for professional medical advice.</div>
+        </div>
+      </div>
+
+      <div class="pd-links">
+        <div class="pd-col">
+          <h4 data-translate="brand-name">Pocket Doctor</h4>
+          <a href="index.html" data-translate="home">Home</a>
+          <a href="index.html#about" data-translate="about">About</a>
+          <a href="checker.html" data-translate="symptom-checker">Symptom Checker</a>
+          <a href="wellness.html" data-translate="wellness">Wellness</a>
+        </div>
+        <div class="pd-col">
+          <h4 data-translate="indian-healthcare">Indian Healthcare</h4>
+          <a href="https://www.mohfw.gov.in/" target="_blank" rel="noopener" data-translate="mohfw">Ministry of Health (MoHFW)</a>
+          <a href="https://www.nhp.gov.in/" target="_blank" rel="noopener" data-translate="nhp">National Health Portal (NHP)</a>
+          <a href="https://www.ayushmanbharat.gov.in/" target="_blank" rel="noopener" data-translate="ayushman-bharat">Ayushman Bharat</a>
+          <a href="https://www.icmr.gov.in/" target="_blank" rel="noopener" data-translate="icmr">ICMR</a>
+        </div>
+        <div class="pd-col">
+          <h4 data-translate="emergency">Emergency</h4>
+          <a href="tel:112" data-translate="dial-112">Dial 112 (Emergency)</a>
+          <a href="tel:108" data-translate="dial-108">Dial 108 (Ambulance)</a>
+          <a href="https://www.nhp.gov.in/ambulance_service_ms" target="_blank" rel="noopener" data-translate="ambulance-services">Ambulance Services</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container pd-footer-bottom">
+      <div>© <span id="year"></span> <span data-translate="brand-name">Pocket Doctor</span></div>
+      <div class="pd-policies">
+        <a href="#" data-translate="privacy">Privacy</a>
+        <a href="#" data-translate="terms">Terms</a>
+        <a href="#" data-translate="disclaimers">Disclaimers</a>
+      </div>
+      <div class="pd-made">Made with <span class="heart">♥</span></div>
+    </div>
+  </footer>
+
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/result.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+
+

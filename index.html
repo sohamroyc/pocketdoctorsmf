@@ -1,0 +1,2431 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pocket Doctor — Instant Symptom Analysis & First Response</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css?v=1.7">
+  <meta name="description" content="pocket doctor
+  : Instant Symptom Analysis & First Response">
+  <script src="assets/js/languages.js"></script>
+  <style>
+    /* Professional UI Enhancements */
+    :root {
+      --primary-color: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary-color: #10b981;
+      --accent-color: #f59e0b;
+      --danger-color: #ef4444;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --info-color: #3b82f6;
+      --dark-bg: #0f172a;
+      --dark-surface: #1e293b;
+      --dark-card: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border-color: #475569;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+    }
+
+    /* Professional Header */
+    .qa-header {
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    /* Light mode header */
+    .light .qa-header {
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, #3b82f6, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .brand-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    /* Light mode brand name */
+    .light .brand-name {
+      color: #1e293b;
+    }
+
+    .header-meta {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .pill {
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .pill-green {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .pill-pink {
+      background: rgba(236, 72, 153, 0.1);
+      color: #ec4899;
+      border: 1px solid rgba(236, 72, 153, 0.2);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* Professional Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: #10b981;
+      color: white;
+      box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+    }
+
+    .btn-primary:hover {
+      background: #059669;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-primary-gradient {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary-gradient:hover {
+      background: linear-gradient(135deg, #059669, #047857);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-icon {
+      font-size: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-primary-gradient:hover .btn-icon {
+      transform: translateX(2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #f8fafc;
+      border: 1px solid #475569;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    /* Light mode button styles */
+    .light .btn-outline {
+      background: transparent;
+      color: #1e293b;
+      border: 1px solid #cbd5e1;
+    }
+
+    .light .btn-outline:hover {
+      background: rgba(59, 130, 246, 0.05);
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #f8fafc;
+    }
+
+    /* Light mode ghost button */
+    .light .btn-ghost {
+      background: rgba(0, 0, 0, 0.05);
+      color: #475569;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .light .btn-ghost:hover {
+      background: rgba(0, 0, 0, 0.1);
+      color: #1e293b;
+    }
+
+    .btn-accent {
+      background: #ef4444;
+      color: white;
+      box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+    }
+
+    .btn-accent:hover {
+      background: #dc2626;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-lg {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+    }
+
+    /* Professional Healthcare Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #334155 70%, #475569 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 8rem 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Light mode hero section */
+    .light .hero {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 30%, #cbd5e1 70%, #94a3b8 100%);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(59, 130, 246, 0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      opacity: 0.6;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: rgba(59, 130, 246, 0.1);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Light mode hero badge */
+    .light .hero-badge {
+      background: rgba(59, 130, 246, 0.15);
+      color: #2563eb;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+    }
+
+    .badge-icon {
+      font-size: 1rem;
+    }
+
+    .hero-title {
+      font-size: 4rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      color: #f8fafc;
+      text-align: center;
+    }
+
+    /* Light mode hero title */
+    .light .hero-title {
+      color: #1e293b;
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #10b981, #34d399);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: #cbd5e1;
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+      line-height: 1.6;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Light mode hero subtitle */
+    .light .hero-subtitle {
+      color: #38619b;
+    }
+
+    .cta {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .trustbar {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .trustbar span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      font-size: 0.875rem;
+      color: #e2e8f0;
+      font-weight: 500;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Light mode trustbar */
+    .light .trustbar span {
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      color: #475569;
+    }
+
+    /* Professional Cards */
+    .card {
+      background: var(--dark-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary-color);
+    }
+
+    .card h2, .card h3 {
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .card p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Light mode cards */
+    .light .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .light .card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+      border-color: #3b82f6;
+    }
+
+    .light .card h2, .light .card h3 {
+      color: #1e293b;
+    }
+
+    .light .card p {
+      color: #475569;
+    }
+
+    /* Professional Footer */
+    .qa-footer {
+      background: var(--dark-bg) !important;
+      color: var(--text-secondary) !important;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .qa-footer h4 {
+      color: var(--text-primary) !important;
+    }
+    
+    .qa-footer .footer-link {
+      color: var(--secondary-color) !important;
+      text-decoration: none !important;
+    }
+    
+    .qa-footer .footer-link:hover {
+      color: #34d399 !important;
+      text-decoration: underline !important;
+    }
+    
+    .qa-footer .footer-bottom {
+      color: var(--text-primary) !important;
+    }
+    
+    .qa-footer .footer-bottom div:last-child {
+      color: var(--text-muted) !important;
+    }
+
+    /* Light mode footer */
+    .light .qa-footer {
+      background: #f8fafc !important;
+      color: #475569 !important;
+      border-top: 1px solid #e2e8f0;
+    }
+    
+    .light .qa-footer h4 {
+      color: #1e293b !important;
+    }
+    
+    .light .qa-footer .footer-link {
+      color: #10b981 !important;
+    }
+    
+    .light .qa-footer .footer-link:hover {
+      color: #059669 !important;
+    }
+    
+    .light .qa-footer .footer-bottom {
+      color: #1e293b !important;
+    }
+    
+    .light .qa-footer .footer-bottom div:last-child {
+      color: #64748b !important;
+    }
+
+    /* Dark mode overrides */
+    .dark .qa-footer {
+      background: var(--dark-bg) !important;
+    }
+    
+    .dark .qa-footer h4 {
+      color: var(--text-primary) !important;
+    }
+    
+    .dark .qa-footer .footer-link {
+      color: var(--secondary-color) !important;
+    }
+    
+    .dark .qa-footer .footer-link:hover {
+      color: #34d399 !important;
+    }
+
+         /* Small Circular Floating Action Button */
+     .chatbot-fab {
+       position: fixed !important;
+       bottom: 1rem !important;
+       left: 1rem !important;
+       z-index: 9999 !important;
+       border: none !important;
+       border-radius: 50% !important;
+       width: 50px !important;
+       height: 50px !important;
+       padding: 0 !important;
+       display: flex !important;
+       align-items: center !important;
+       justify-content: center !important;
+       font-weight: 600 !important;
+       transition: all 0.3s ease !important;
+       cursor: pointer !important;
+       font-size: 1.2rem !important;
+       visibility: visible !important;
+       opacity: 1 !important;
+       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+       background: #10b981 !important;
+       color: white !important;
+     }
+
+         /* Emergency SOS Button */
+     .sos-emergency-btn {
+       position: fixed !important;
+       bottom: 1rem !important;
+       right: 1rem !important;
+       z-index: 9999 !important;
+       border: none !important;
+       border-radius: 50% !important;
+       width: 50px !important;
+       height: 50px !important;
+       padding: 0 !important;
+       display: flex !important;
+       align-items: center !important;
+       justify-content: center !important;
+       font-weight: 600 !important;
+       transition: all 0.3s ease !important;
+       cursor: pointer !important;
+       font-size: 1.2rem !important;
+       visibility: visible !important;
+       opacity: 1 !important;
+       box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3) !important;
+       background: #ef4444 !important;
+       color: white !important;
+       animation: pulse 2s infinite !important;
+     }
+
+    .sos-emergency-btn:hover {
+      background: #dc2626 !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4) !important;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+         /* Emergency Panel Styles */
+     .emergency-panel {
+       position: fixed;
+       bottom: 5rem;
+       right: 1rem;
+       width: 320px;
+       background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+       border: 1px solid #475569;
+       border-radius: 16px;
+       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+       z-index: 10000;
+       display: none;
+       backdrop-filter: blur(20px);
+       border: 1px solid rgba(71, 85, 105, 0.3);
+     }
+
+     /* Light mode emergency panel */
+     .light .emergency-panel {
+       background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+       border: 1px solid #e2e8f0;
+       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+     }
+
+    .emergency-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem;
+      border-bottom: 1px solid rgba(71, 85, 105, 0.3);
+      background: linear-gradient(135deg, #334155 0%, #475569 100%);
+      border-radius: 16px 16px 0 0;
+      position: relative;
+    }
+
+    .emergency-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .emergency-icon {
+      font-size: 1.5rem;
+    }
+
+    .emergency-header .title {
+      font-weight: 600;
+      color: #f8fafc;
+      font-size: 1rem;
+    }
+
+    .emergency-header .status {
+      color: #94a3b8;
+      font-size: 0.875rem;
+    }
+
+    /* Light mode emergency header */
+    .light .emergency-header .title {
+      color: #1e293b;
+    }
+
+    .light .emergency-header .status {
+      color: #64748b;
+    }
+
+    .emergency-close {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.25rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .emergency-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #f8fafc;
+    }
+
+    .emergency-body {
+      padding: 1rem;
+    }
+
+    .emergency-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .emergency-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: left;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .emergency-action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .whatsapp-btn {
+      background: #10b981;
+      color: white;
+    }
+
+    .whatsapp-btn:hover {
+      background: #059669;
+    }
+
+    .clinic-btn {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .clinic-btn:hover {
+      background: #2563eb;
+    }
+
+    .ambulance-btn {
+      background: #ef4444;
+      color: white;
+    }
+
+    .ambulance-btn:hover {
+      background: #dc2626;
+    }
+
+    .police-btn {
+      background: #8b5cf6;
+      color: white;
+    }
+
+    .police-btn:hover {
+      background: #7c3aed;
+    }
+
+         /* Clinics Panel Styles */
+     .clinics-panel {
+       position: fixed;
+       bottom: 5rem;
+       right: 1rem;
+       width: 320px;
+       background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+       border: 1px solid rgba(71, 85, 105, 0.3);
+       border-radius: 16px;
+       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+       z-index: 10000;
+       display: none;
+       backdrop-filter: blur(20px);
+     }
+
+     /* Light mode clinics panel */
+     .light .clinics-panel {
+       background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+       border: 1px solid #e2e8f0;
+       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+     }
+
+    .clinics-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem;
+      border-bottom: 1px solid rgba(71, 85, 105, 0.3);
+      background: linear-gradient(135deg, #334155 0%, #475569 100%);
+      border-radius: 16px 16px 0 0;
+      position: relative;
+    }
+
+    .clinics-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .clinics-icon {
+      font-size: 1.5rem;
+    }
+
+    .clinics-header .title {
+      font-weight: 600;
+      color: #f8fafc;
+      font-size: 1rem;
+    }
+
+    .clinics-header .status {
+      color: #94a3b8;
+      font-size: 0.875rem;
+    }
+
+    /* Light mode clinics header */
+    .light .clinics-header .title {
+      color: #1e293b;
+    }
+
+    .light .clinics-header .status {
+      color: #64748b;
+    }
+
+    .clinics-close {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.25rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .clinics-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #f8fafc;
+    }
+
+    .clinics-body {
+      padding: 1rem;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .clinic-card {
+      background: linear-gradient(135deg, #334155 0%, #475569 100%);
+      border: 1px solid rgba(71, 85, 105, 0.3);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .clinic-card:hover {
+      background: linear-gradient(135deg, #475569 0%, #64748b 100%);
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+    }
+
+    .clinic-card h4 {
+      color: #f8fafc;
+      margin: 0 0 0.5rem 0;
+      font-size: 1rem;
+    }
+
+    .clinic-card p {
+      color: #cbd5e1;
+      margin: 0.25rem 0;
+      font-size: 0.875rem;
+    }
+
+    .clinic-card strong {
+      color: #e2e8f0;
+    }
+
+    /* Light mode clinic cards */
+    .light .clinic-card {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      border: 1px solid #cbd5e1;
+    }
+
+    .light .clinic-card:hover {
+      background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+      border-color: #3b82f6;
+    }
+
+    .light .clinic-card h4 {
+      color: #1e293b;
+    }
+
+    .light .clinic-card p {
+      color: #475569;
+    }
+
+    .light .clinic-card strong {
+      color: #1e293b;
+    }
+
+    .clinic-card a {
+      color: #10b981;
+      text-decoration: none;
+    }
+
+    .clinic-card a:hover {
+      text-decoration: underline;
+    }
+
+    .loading {
+      text-align: center;
+      color: #94a3b8;
+      padding: 2rem 0;
+    }
+
+         .chatbot-fab:hover {
+       background: #059669 !important;
+       transform: translateY(-2px) !important;
+       box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4) !important;
+     }
+
+           /* First Aid Section Styles - Dark Mode Only */
+      .first-aid-section {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        padding: 4rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+     .first-aid-section::before {
+       content: '';
+       position: absolute;
+       top: 0;
+       left: 0;
+       right: 0;
+       bottom: 0;
+       background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(59, 130, 246, 0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+       opacity: 0.4;
+     }
+
+     .section-header {
+       text-align: center;
+       margin-bottom: 3rem;
+       position: relative;
+       z-index: 1;
+     }
+
+     .section-icon {
+       font-size: 3rem;
+       margin-bottom: 1rem;
+       background: linear-gradient(135deg, #ef4444, #f97316);
+       -webkit-background-clip: text;
+       -webkit-text-fill-color: transparent;
+       background-clip: text;
+     }
+
+     .section-header h2 {
+       font-size: 2.5rem;
+       font-weight: 700;
+       color: var(--text-primary);
+       margin: 0 0 1rem 0;
+     }
+
+     .section-header p {
+       color: var(--text-secondary);
+       font-size: 1.1rem;
+       margin: 0;
+       max-width: 600px;
+       margin-left: auto;
+       margin-right: auto;
+     }
+
+     .first-aid-grid {
+       display: flex;
+       gap: 1.5rem;
+       overflow-x: auto;
+       padding: 1rem 0;
+       scrollbar-width: thin;
+       scrollbar-color: rgba(71, 85, 105, 0.5) transparent;
+       margin-bottom: 3rem;
+       position: relative;
+       z-index: 1;
+     }
+
+     .first-aid-grid::-webkit-scrollbar {
+       height: 8px;
+     }
+
+     .first-aid-grid::-webkit-scrollbar-track {
+       background: rgba(71, 85, 105, 0.1);
+       border-radius: 4px;
+     }
+
+     .first-aid-grid::-webkit-scrollbar-thumb {
+       background: rgba(71, 85, 105, 0.5);
+       border-radius: 4px;
+     }
+
+           .first-aid-card {
+        background: #1e293b;
+        border: 1px solid #475569;
+        border-radius: 16px;
+        padding: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        min-width: 280px;
+        flex-shrink: 0;
+        cursor: pointer;
+      }
+
+     .first-aid-card:hover {
+       transform: translateY(-5px);
+       box-shadow: var(--shadow-xl);
+       border-color: var(--primary-color);
+     }
+
+     .card-icon {
+       font-size: 2rem;
+       margin-bottom: 1rem;
+       display: block;
+     }
+
+     .first-aid-card h3 {
+       margin: 0 0 0.8rem 0;
+       font-size: 1.3rem;
+       font-weight: 600;
+       color: var(--text-primary);
+     }
+
+     .first-aid-card p {
+       margin: 0 0 0.8rem 0;
+       color: var(--text-secondary);
+       font-size: 1rem;
+       line-height: 1.4;
+     }
+
+     .warning-box {
+       background: rgba(239, 68, 68, 0.1);
+       border: 1px solid rgba(239, 68, 68, 0.2);
+       padding: 0.8rem;
+       border-radius: 8px;
+       margin-bottom: 1rem;
+     }
+
+     .warning-box p {
+       margin: 0;
+       font-size: 0.85rem;
+       color: var(--text-secondary);
+     }
+
+     .warning-box strong {
+       color: #ef4444;
+     }
+
+     .learn-more-btn {
+       color: var(--text-primary);
+       text-decoration: none;
+       font-weight: 600;
+       background: rgba(59, 130, 246, 0.1);
+       border: 1px solid rgba(59, 130, 246, 0.3);
+       padding: 0.5rem 1rem;
+       border-radius: 6px;
+       display: inline-block;
+       transition: all 0.3s ease;
+       cursor: pointer;
+       font-size: 0.875rem;
+     }
+
+     .learn-more-btn:hover {
+       background: rgba(59, 130, 246, 0.2);
+       border-color: #3b82f6;
+       transform: translateY(-1px);
+     }
+
+     /* Card-specific themes */
+     .burns-card {
+       border-color: rgba(239, 68, 68, 0.3);
+     }
+
+     .burns-card:hover {
+       border-color: #ef4444;
+       box-shadow: 0 8px 25px rgba(239, 68, 68, 0.2);
+     }
+
+     .bleeding-card {
+       border-color: rgba(59, 130, 246, 0.3);
+     }
+
+     .bleeding-card:hover {
+       border-color: #3b82f6;
+       box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+     }
+
+     .cpr-card {
+       border-color: rgba(16, 185, 129, 0.3);
+     }
+
+     .cpr-card:hover {
+       border-color: #10b981;
+       box-shadow: 0 8px 25px rgba(16, 185, 129, 0.2);
+     }
+
+     .choking-card {
+       border-color: rgba(245, 158, 11, 0.3);
+     }
+
+     .choking-card:hover {
+       border-color: #f59e0b;
+       box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2);
+     }
+
+     .fracture-card {
+       border-color: rgba(168, 85, 247, 0.3);
+     }
+
+     .fracture-card:hover {
+       border-color: #a855f7;
+       box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2);
+     }
+
+     .heatstroke-card {
+       border-color: rgba(239, 68, 68, 0.3);
+     }
+
+     .heatstroke-card:hover {
+       border-color: #ef4444;
+       box-shadow: 0 8px 25px rgba(239, 68, 68, 0.2);
+     }
+
+           .emergency-contacts {
+        text-align: center;
+        margin-top: 3rem;
+        padding: 2rem;
+        background: rgba(30, 41, 59, 0.8);
+        border: 1px solid #475569;
+        border-radius: 16px;
+        position: relative;
+        z-index: 1;
+      }
+
+     .emergency-contacts h3 {
+       color: var(--text-primary);
+       margin: 0 0 1.5rem 0;
+       font-size: 1.3rem;
+       font-weight: 600;
+     }
+
+     .contact-grid {
+       display: flex;
+       justify-content: center;
+       gap: 2rem;
+       flex-wrap: wrap;
+     }
+
+     .contact-item {
+       display: flex;
+       align-items: center;
+       gap: 0.5rem;
+       color: var(--text-secondary);
+       font-size: 0.95rem;
+     }
+
+     .contact-icon {
+       font-size: 1.2rem;
+     }
+
+     .contact-item strong {
+       color: var(--text-primary);
+     }
+
+           /* Light mode overrides for first aid section */
+    .light .first-aid-section {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+
+    .light .first-aid-section::before {
+      opacity: 0.2;
+    }
+
+    .light .first-aid-card {
+      background: #ffffff;
+      border-color: #e2e8f0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .light .first-aid-card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    }
+
+    .light .emergency-contacts {
+      background: rgba(255, 255, 255, 0.8);
+      border-color: #e2e8f0;
+    }
+
+    /* Light mode text colors */
+    .light .section-header h2 {
+      color: #1e293b;
+    }
+
+    .light .section-header p {
+      color: #475569;
+    }
+
+    .light .first-aid-card h3 {
+      color: #1e293b;
+    }
+
+    .light .first-aid-card p {
+      color: #475569;
+    }
+
+    .light .emergency-contacts h3 {
+      color: #1e293b;
+    }
+
+    .light .contact-item {
+      color: #475569;
+    }
+
+    .light .contact-item strong {
+      color: #1e293b;
+    }
+
+    /* Dark mode styles - always applied */
+    .first-aid-section {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    .first-aid-section::before {
+      opacity: 0.4;
+    }
+
+    .first-aid-card {
+      background: #1e293b;
+      border-color: #475569;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    }
+
+    .first-aid-card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+    }
+
+    .emergency-contacts {
+      background: rgba(30, 41, 59, 0.8);
+      border-color: #475569;
+    }
+
+    /* Dark mode text colors - always applied */
+    .section-header h2 {
+      color: #f8fafc;
+    }
+
+    .section-header p {
+      color: #cbd5e1;
+    }
+
+    .first-aid-card h3 {
+      color: #f8fafc;
+    }
+
+    .first-aid-card p {
+      color: #cbd5e1;
+    }
+
+    .emergency-contacts h3 {
+      color: #f8fafc;
+    }
+
+    .contact-item {
+      color: #cbd5e1;
+    }
+
+    .contact-item strong {
+      color: #f8fafc;
+    }
+
+    /* Light mode styles for health dashboard and other sections */
+    .light .section {
+      background: #f8fafc;
+    }
+
+    .light .health-dashboard-section {
+      background: #ffffff;
+    }
+
+    .light .dashboard-header h2 {
+      color: #1e293b;
+    }
+
+    .light .dashboard-subtitle {
+      color: #475569;
+    }
+
+    .light .metric-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .light .metric-card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    }
+
+    .light .metric-value {
+      color: #1e293b;
+    }
+
+    .light .metric-label {
+      color: #475569;
+    }
+
+    .light .metric-range {
+      color: #64748b;
+    }
+
+    .light .activity-section h3,
+    .light .alerts-section h3 {
+      color: #1e293b;
+    }
+
+    .light .activity-label {
+      color: #475569;
+    }
+
+    .light .activity-value {
+      color: #1e293b;
+    }
+
+    .light .alert-title {
+      color: #1e293b;
+    }
+
+    .light .alert-message {
+      color: #475569;
+    }
+
+    .light .ai-symptom-section {
+      background: #f8fafc;
+    }
+
+    .light .ai-symptom-header h2 {
+      color: #1e293b;
+    }
+
+    .light .ai-subtitle {
+      color: #475569;
+    }
+
+    .light .symptom-input {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      color: #1e293b;
+    }
+
+    .light .symptom-input::placeholder {
+      color: #94a3b8;
+    }
+
+    .light .symptom-result {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+    }
+
+    .light .result-header h3 {
+      color: #1e293b;
+    }
+
+    .light .analysis-section h4 {
+      color: #1e293b;
+    }
+
+    .light .analysis-text,
+    .light .recommendations-list,
+    .light .medical-help-text {
+      color: #475569;
+    }
+
+    .light .result-disclaimer {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    .light .result-disclaimer p {
+      color: #92400e;
+    }
+
+    /* Light mode for muted text */
+    .light .muted {
+      color: #64748b !important;
+    }
+
+    /* Mobile Responsive for Small Circular FAB */
+         @media (max-width: 768px) {
+       .chatbot-fab {
+         width: 45px !important;
+         height: 45px !important;
+         font-size: 1rem !important;
+         bottom: 0.75rem !important;
+         left: 0.75rem !important;
+       }
+     }
+
+         @media (max-width: 480px) {
+       .chatbot-fab {
+         width: 40px !important;
+         height: 40px !important;
+         font-size: 0.9rem !important;
+         bottom: 0.5rem !important;
+         left: 0.5rem !important;
+       }
+       
+              .sos-emergency-btn {
+          width: 40px !important;
+          height: 40px !important;
+          font-size: 0.9rem !important;
+          bottom: 0.5rem !important;
+          right: 0.5rem !important;
+        }
+        
+        .emergency-panel {
+          width: 280px;
+          right: 0.5rem;
+          bottom: 4rem;
+        }
+        
+        .clinics-panel {
+          width: 280px;
+          right: 0.5rem;
+          bottom: 4rem;
+        }
+     }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .header-actions {
+        gap: 0.25rem;
+      }
+      
+      .btn {
+        padding: 0.625rem 1rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 4rem 0;
+        min-height: 80vh;
+      }
+      
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.25rem;
+      }
+      
+      .header-inner {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+      }
+      
+      .header-left {
+        justify-content: center;
+      }
+      
+      .header-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      
+      .btn {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+        min-width: 120px;
+      }
+      
+      .cta {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .trustbar {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 3rem 0;
+        min-height: 70vh;
+      }
+      
+      .hero-title {
+        font-size: 2rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.125rem;
+      }
+      
+      .cta {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .header-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body class="app-pharma">
+  <header class="qa-header">
+    <div class="container header-inner">
+      <div class="header-left">
+        <div class="brand">
+          <span class="logo" aria-hidden="true">🫀</span>
+          <span class="brand-name" data-translate="brand-name">Pocket Doctor</span>
+        </div>
+        <div class="header-meta">
+          <span class="pill pill-green" data-translate="hipaa-compliant">HIPAA Compliant</span>
+          <span class="pill pill-pink" data-translate="available-24-7">24/7 Available</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a class="btn btn-accent" href="wellness.html" data-translate="wellness">❤ Wellness</a>
+        <button class="btn btn-ghost" data-lang-toggle type="button">🌐 EN</button>
+        <button class="btn btn-ghost" data-toggle-theme type="button" data-translate="theme">🌙 Theme</button>
+        <a class="btn btn-outline" href="login.html" data-translate="login">🔐 Login</a>
+        <a class="btn btn-primary-gradient" href="register.html" data-translate="register">👤 Register</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-badge">
+          <span class="badge-icon">🔗</span>
+          <span data-translate="ai-health-secure">AI Health • Private & Secure</span>
+        </div>
+        <h1 class="hero-title">
+          <span data-translate="hero-title">Instant Symptom Analysis & First</span>
+          <span class="text-gradient" data-translate="response">Response</span>
+        </h1>
+        <p class="hero-subtitle" data-translate="hero-subtitle">Get a quick risk indicator and guidance in seconds.</p>
+        <div class="cta">
+          <a class="btn btn-primary-gradient btn-lg" href="checker.html">
+            <span data-translate="start-button">Start →</span>
+          </a>
+          <a class="btn btn-outline btn-lg" href="wellness.html" data-translate="explore-dashboard">Explore Dashboard</a>
+        </div>
+        <div class="trustbar">
+          <span data-translate="hipaa-ready">🔒 HIPAA-ready</span>
+          <span data-translate="real-time-insights">⚡ Real-time insights</span>
+          <span data-translate="ai-powered">🧠 AI-powered</span>
+          <span data-translate="light-dark">🌙 Light/Dark</span>
+        </div>
+      </div>
+      <div class="hero-orbit hero-orbit-1"></div>
+      <div class="hero-orbit hero-orbit-2"></div>
+      <div class="hero-orbit hero-orbit-3"></div>
+    </section>
+
+    <!-- Health Monitoring Dashboard Section -->
+    <section class="section health-dashboard-section">
+      <div class="container">
+        <div class="dashboard-header">
+          <h2 data-translate="health-dashboard">🫀 Real-time Health Monitoring</h2>
+          <p class="dashboard-subtitle" data-translate="dashboard-subtitle">Track your vital signs and daily health metrics</p>
+        </div>
+        
+        <!-- Health Metrics Grid -->
+        <div class="health-metrics-grid">
+          <div class="metric-card">
+            <div class="metric-icon heart-icon">❤️</div>
+            <div class="metric-value">72</div>
+            <div class="metric-label" data-translate="heart-rate-bpm">Heart Rate (BPM)</div>
+            <div class="metric-range" data-translate="normal-range-heart">Normal Range: 60-100</div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-icon bp-icon">💧</div>
+            <div class="metric-value">120/80</div>
+            <div class="metric-label" data-translate="blood-pressure">Blood Pressure</div>
+            <div class="metric-range" data-translate="normal-bp">Normal: <120/80</div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-icon temp-icon">🌡️</div>
+            <div class="metric-value">98.6</div>
+            <div class="metric-label" data-translate="temperature-f">Temperature (°F)</div>
+            <div class="metric-range" data-translate="normal-temp">Normal: 97.8-99.0</div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-icon oxygen-icon">🫁</div>
+            <div class="metric-value">98</div>
+            <div class="metric-label" data-translate="oxygen-saturation">Oxygen Saturation (%)</div>
+            <div class="metric-range" data-translate="normal-oxygen">Normal: 95-100%</div>
+          </div>
+        </div>
+
+        <!-- Daily Activity and Health Alerts -->
+        <div class="dashboard-content-grid">
+          <div class="activity-section">
+            <h3 data-translate="daily-activity">📊 Daily Activity</h3>
+            <div class="activity-item">
+              <div class="activity-label" data-translate="steps">Steps</div>
+              <div class="progress-bar">
+                <div class="progress-fill steps-progress" style="width: 85%"></div>
+              </div>
+              <div class="activity-value">8,500/10,000</div>
+            </div>
+            
+            <div class="activity-item">
+              <div class="activity-label" data-translate="sleep">Sleep</div>
+              <div class="progress-bar">
+                <div class="progress-fill sleep-progress" style="width: 75%"></div>
+              </div>
+              <div class="activity-value">7.5/10 <span data-translate="hours">hours</span></div>
+            </div>
+            
+            <div class="activity-item">
+              <div class="activity-label" data-translate="water">Water</div>
+              <div class="progress-bar">
+                <div class="progress-fill water-progress" style="width: 83%"></div>
+              </div>
+              <div class="activity-value">2.5/3.0L</div>
+            </div>
+          </div>
+          
+          <div class="alerts-section">
+            <h3 data-translate="health-alerts">⚠️ Health Alerts</h3>
+            <div class="alert-item alert-warning">
+              <div class="alert-icon">⚠️</div>
+              <div class="alert-content">
+                <div class="alert-title" data-translate="low-water-intake">Low Water Intake</div>
+                <div class="alert-message" data-translate="drink-more-water">Drink 0.5L more water today</div>
+              </div>
+            </div>
+            
+            <div class="alert-item alert-success">
+              <div class="alert-icon">✅</div>
+              <div class="alert-content">
+                <div class="alert-title" data-translate="exercise-goal-met">Exercise Goal Met</div>
+                <div class="alert-message" data-translate="great-workout">Great job on your workout!</div>
+              </div>
+            </div>
+            
+            <div class="alert-item alert-info">
+              <div class="alert-icon">ℹ️</div>
+              <div class="alert-content">
+                <div class="alert-title" data-translate="medication-reminder">Medication Reminder</div>
+                <div class="alert-message" data-translate="take-evening-medication">Take your evening medication</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container grid-2">
+        <div class="card" style="background: linear-gradient(135deg, #20c997, #2f80ed); color:#fff;">
+          <h2 style="margin:0 0 6px;" data-translate="health-dashboard">Health Dashboard</h2>
+          <p style="margin:0 0 12px;opacity:.95;" data-translate="dashboard-overview">Your quick overview: score, actions, and emergency links.</p>
+          <a class="btn btn-outline" href="dashboard.html" style="border-color:#fff;color:#fff;" data-translate="open-dashboard">Open Dashboard</a>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 8px;" data-translate="quick-actions">Quick Actions</h3>
+          <div style="display:grid;gap:8px;">
+            <a class="btn" href="checker.html" data-translate="check-symptoms">Check Symptoms</a>
+            <a class="btn" href="wellness.html" data-translate="wellness-tips">Wellness Tips</a>
+            <a class="btn" href="result.html?symptom=Headache&intensity=mild&duration=2&unit=hours" data-translate="sample-result">Sample Result</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Public Health Features -->
+    <section class="section">
+      <div class="container grid-2">
+        <!-- Voice-Based Health Tips -->
+        <div class="card">
+          <h3 style="margin-top:0;display:flex;align-items:center;gap:10px;">
+            <span>🎙️</span> <span data-translate="voice-health-tip">Voice Health Tip</span>
+          </h3>
+          <p class="muted" data-translate="voice-tip-description">Tap to listen to today's health tip in your language.</p>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <select id="voice-lang" style="min-width:160px;">
+              <option value="en-IN" data-translate="english-india">English (India)</option>
+              <option value="hi-IN" data-translate="hindi">Hindi</option>
+              <option value="bn-IN" data-translate="bengali">Bengali</option>
+              <option value="ta-IN" data-translate="tamil">Tamil</option>
+              <option value="te-IN" data-translate="telugu">Telugu</option>
+              <option value="mr-IN" data-translate="marathi">Marathi</option>
+            </select>
+            <button id="voice-play" class="btn btn-primary" data-translate="play-tip">▶ Play Tip</button>
+          </div>
+        </div>
+
+        <!-- Pictorial Guidance -->
+        <div class="card">
+          <h3 style="margin-top:0;display:flex;align-items:center;gap:10px;"><span>🖼️</span> <span data-translate="pictorial-guidance">Pictorial Guidance</span></h3>
+          <p class="muted" data-translate="pictorial-description">Step-by-step images for safe medicine use and hygiene.</p>
+          <div class="pic-carousel">
+            <div class="pic-item" data-translate="wash-hands">🧼 Wash hands</div>
+            <div class="pic-item" data-translate="wear-mask">😷 Wear mask</div>
+            <div class="pic-item" data-translate="use-mosquito-net">🕸️ Use mosquito net</div>
+          </div>
+          <button id="pic-more" class="btn btn-outline" style="margin-top:10px;" data-translate="show-more">Show More</button>
+        </div>
+
+
+
+        <!-- Government Schemes -->
+        <div class="card">
+          <h3 style="margin-top:0;display:flex;align-items:center;gap:10px;"><span>🏛️</span> <span data-translate="free-government-schemes">Free Government Schemes</span></h3>
+          <p class="muted" data-translate="schemes-description">Check eligibility for free medicines and health schemes.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="btn btn-outline" href="https://pmjay.gov.in" target="_blank" rel="noopener" data-translate="ayushman-bharat">Ayushman Bharat</a>
+            <a class="btn btn-outline" href="https://janaushadhi.gov.in" target="_blank" rel="noopener" data-translate="jan-aushadhi">Jan Aushadhi</a>
+            <a class="btn btn-outline" href="https://www.nhp.gov.in/" target="_blank" rel="noopener" data-translate="vaccination">Vaccination</a>
+          </div>
+        </div>
+
+        <!-- Festival Health Widget -->
+        <div class="card" id="festival-widget">
+          <h3 style="margin-top:0;display:flex;align-items:center;gap:10px;"><span>🎉</span> <span data-translate="festival-health">Festival Health</span></h3>
+          <p class="muted" id="festival-title" data-translate="festival-tips">Upcoming festival: Rath Yatra – Follow these tips!</p>
+          <div class="festival-tips">
+            <button class="btn btn-outline" data-tip="Water safety: carry sealed water." data-translate="water">Water</button>
+            <button class="btn btn-outline" data-tip="Food hygiene: avoid uncovered food." data-translate="food">Food</button>
+            <button class="btn btn-outline" data-tip="Crowds: wear mask in dense areas." data-translate="crowd">Crowd</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container grid-2">
+        <div class="card" style="text-align:center;">
+          <div style="font-size:34px">💊</div>
+          <h2 style="margin:6px 0 6px;" data-translate="medication-manager">Medication Manager</h2>
+          <p class="muted" style="margin:0 0 12px;" data-translate="medication-subtitle">Smart reminders and interaction checking</p>
+          <div style="display:grid;gap:10px;justify-items:center;">
+            <a class="btn" href="medications.html" data-translate="add-medication">＋ Add Medication</a>
+            <a class="btn" href="medications.html#interactions" data-translate="check-interactions">⚠ Check Interactions</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3 data-translate="why-track-medications">Why track medications?</h3>
+          <p class="muted" data-translate="medication-benefits">Stay on schedule, avoid interactions, and keep your providers informed.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Symptom Checker Section -->
+    <section class="section ai-symptom-section">
+      <div class="container">
+        <div class="ai-symptom-header">
+          <div class="ai-brain-icon">🧠</div>
+          <h2 data-translate="ai-symptom-checker">AI Symptom Checker</h2>
+          <p class="ai-subtitle" data-translate="ai-subtitle">Get instant health insights with our advanced AI analysis</p>
+        </div>
+        
+        <div class="ai-symptom-content">
+          <div class="symptom-input-container">
+            <textarea 
+              id="symptom-input" 
+              class="symptom-input" 
+              data-translate="symptom-placeholder"
+              placeholder="Describe your symptoms in detail... (e.g., I have a headache with fever for the past 2 days, accompanied by nausea)"
+              rows="4"
+            ></textarea>
+            <button id="analyze-symptoms" class="btn btn-primary btn-lg analyze-btn">
+              <span class="btn-icon">🔍</span>
+              <span data-translate="analyze-symptoms">Analyze Symptoms</span>
+            </button>
+          </div>
+          
+          <div id="symptom-result" class="symptom-result" style="display: none;">
+            <div class="result-header">
+              <h3>AI Analysis Result</h3>
+              <div class="confidence-score">
+                <span class="score-label">Confidence:</span>
+                <span class="score-value" id="confidence-score">--</span>
+              </div>
+            </div>
+            <div class="result-content">
+              <div class="analysis-section">
+                <h4>🔍 Symptom Analysis</h4>
+                <div id="symptom-analysis" class="analysis-text"></div>
+              </div>
+              <div class="analysis-section">
+                <h4>⚠️ Risk Assessment</h4>
+                <div id="risk-assessment" class="risk-level"></div>
+              </div>
+              <div class="analysis-section">
+                <h4>💡 Recommendations</h4>
+                <div id="recommendations" class="recommendations-list"></div>
+              </div>
+              <div class="analysis-section">
+                <h4>🚨 When to Seek Medical Help</h4>
+                <div id="medical-help" class="medical-help-text"></div>
+              </div>
+            </div>
+            <div class="result-disclaimer">
+              <p><strong>⚠️ Important:</strong> This AI analysis is for informational purposes only and should not replace professional medical advice. Always consult a healthcare provider for proper diagnosis and treatment.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+                        <!-- Enhanced First Aid Guide Section -->
+     <section class="section first-aid-section">
+       <div class="container">
+         <div class="section-header">
+           <div class="section-icon">🩺</div>
+           <h2 data-translate="first-aid-guide">First Aid Guide</h2>
+           <p data-translate="first-aid-subtitle">Essential emergency response procedures for common injuries</p>
+        </div>
+         
+         <div class="first-aid-grid">
+           <!-- Burns Card -->
+           <div class="first-aid-card burns-card">
+             <div class="card-icon">🔥</div>
+           
+             <h3 data-translate="burns">Burns</h3>
+             <p data-translate="burns-tip">Cool with running water for 10-20 minutes</p>
+             <div class="warning-box">
+               <p><strong>⚠️ <span data-translate="burns-warning">Don't: Use ice, butter, or break blisters</span></strong></p>
+        </div>
+             <button class="learn-more-btn" data-translate="learn-more">Learn More</button>
+      </div>
+           
+           <!-- Bleeding Card -->
+           <div class="first-aid-card bleeding-card">
+             <div class="card-icon">💧</div>
+             <h3 data-translate="bleeding">Bleeding</h3>
+             <p data-translate="bleeding-tip">Apply direct pressure with clean cloth</p>
+             <div class="warning-box">
+               <p><strong>⚠️ <span data-translate="bleeding-warning">Don't: Remove embedded objects</span></strong></p>
+      </div>
+             <button class="learn-more-btn" data-translate="learn-more">Learn More</button>
+           </div>
+           
+           <!-- CPR Card -->
+           <div class="first-aid-card cpr-card">
+             <div class="card-icon">💚</div>
+             <h3 data-translate="cpr">CPR</h3>
+             <p data-translate="cpr-tip">30 compressions, 2 breaths</p>
+             <div class="warning-box">
+               <p><strong>⚠️ <span data-translate="cpr-warning">Remember: Call emergency services first</span></strong></p>
+          </div>
+             <button class="learn-more-btn" data-translate="learn-more">Learn More</button>
+        </div>
+           
+           <!-- Choking Card -->
+           <div class="first-aid-card choking-card">
+             <div class="card-icon">🤢</div>
+             <h3 data-translate="choking">Choking</h3>
+             <p data-translate="choking-tip">5 back blows, 5 abdominal thrusts</p>
+             <div class="warning-box">
+               <p><strong>⚠️ <span data-translate="choking-warning">For infants: Use back blows and chest thrusts</span></strong></p>
+             </div>
+             <button class="learn-more-btn" data-translate="learn-more">Learn More</button>
+      </div>
+
+           <!-- Fracture Card -->
+           <div class="first-aid-card fracture-card">
+             <div class="card-icon">🦴</div>
+             <h3 data-translate="fractures">Fractures</h3>
+             <p data-translate="fractures-tip">Immobilize the injured area</p>
+             <div class="warning-box">
+               <p><strong>⚠️ <span data-translate="fractures-warning">Don't: Try to straighten the bone</span></strong></p>
+        </div>
+             <button class="learn-more-btn" data-translate="learn-more">Learn More</button>
+        </div>
+           
+           <!-- Heat Stroke Card -->
+           <div class="first-aid-card heatstroke-card">
+             <div class="card-icon">🌡️</div>
+             <h3 data-translate="heat-stroke">Heat Stroke</h3>
+             <p data-translate="heat-stroke-tip">Move to cool area, remove clothing</p>
+             <div class="warning-box">
+               <p><strong>⚠️ <span data-translate="heat-stroke-warning">Emergency: Call 108 immediately</span></strong></p>
+        </div>
+             <button class="learn-more-btn" data-translate="learn-more">Learn More</button>
+      </div>
+    </div>
+
+         <!-- Emergency Contact Info -->
+         <div class="emergency-contacts">
+           <h3 data-translate="emergency-contacts">Emergency Contacts</h3>
+           <div class="contact-grid">
+             <div class="contact-item">
+               <span class="contact-icon">🚨</span>
+               <strong data-translate="emergency-number">Emergency:</strong> 108
+    </div>
+             <div class="contact-item">
+               <span class="contact-icon">🚑</span>
+               <strong data-translate="ambulance-number">Ambulance:</strong> 102
+             </div>
+             <div class="contact-item">
+               <span class="contact-icon">👮</span>
+               <strong data-translate="police-number">Police:</strong> 100
+             </div>
+           </div>
+         </div>
+       </div>
+     </section>
+
+    
+  </main>
+
+  <footer class="qa-footer" style="background: #1a1a2e; color: #e0e0e0; padding: 3rem 0 1rem; margin-top: 4rem;">
+    <div class="container footer-inner" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+      <div class="footer-col">
+        <h4 style="color: white; font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;" data-translate="brand-name">Pocket Doctor</h4>
+        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+          <a class="footer-link" href="index.html" data-translate="home" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Home</a>
+          <a class="footer-link" href="index.html#about" data-translate="about" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">About</a>
+          <a class="footer-link" href="checker.html" data-translate="symptom-checker" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Symptom Checker</a>
+          <a class="footer-link" href="wellness.html" data-translate="wellness" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">❤️ Wellness</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 style="color: white; font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;" data-translate="indian-healthcare">Indian Healthcare</h4>
+        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+          <a class="footer-link" href="https://www.mohfw.gov.in/" target="_blank" rel="noopener" data-translate="mohfw" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Ministry of Health (MoHFW)</a>
+          <a class="footer-link" href="https://www.nhp.gov.in/" target="_blank" rel="noopener" data-translate="nhp" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">National Health Portal (NHP)</a>
+          <a class="footer-link" href="https://www.ayushmanbharat.gov.in/" target="_blank" rel="noopener" data-translate="ayushman-bharat" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Ayushman Bharat</a>
+          <a class="footer-link" href="https://www.icmr.gov.in/" target="_blank" rel="noopener" data-translate="icmr" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">ICMR</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 style="color: white; font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;" data-translate="emergency">Emergency</h4>
+        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+          <a class="footer-link" href="tel:112" data-translate="dial-112" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Dial 112 (Emergency)</a>
+          <a class="footer-link" href="tel:108" data-translate="dial-108" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Dial 108 (Ambulance)</a>
+          <a class="footer-link" href="https://www.nhp.gov.in/ambulance_service_ms" target="_blank" rel="noopener" data-translate="ambulance-services" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Ambulance Services</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 style="color: white; font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;" data-translate="legal-info">Legal & Info</h4>
+        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+          <a class="footer-link" href="#" data-translate="privacy" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Privacy Policy</a>
+          <a class="footer-link" href="#" data-translate="terms" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Terms of Service</a>
+          <a class="footer-link" href="#" data-translate="disclaimers" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Disclaimers</a>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-bottom" style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1.5rem; text-align: center;">
+      <div style="color: white; font-size: 0.9rem; margin-bottom: 0.5rem;">© <span id="year"></span> <span data-translate="brand-name">Pocket Doctor</span></div>
+      <div style="color: #b0b0b0; font-size: 0.85rem;" data-translate="medical-disclaimer">Not a substitute for professional medical advice.</div>
+    </div>
+  </footer>
+
+  <div class="health-bg-icons"></div>
+  <script src="assets/js/common.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // AI Symptom Checker Functionality with Gemini API
+    const symptomInput = document.getElementById('symptom-input');
+    const analyzeBtn = document.getElementById('analyze-symptoms');
+    const symptomResult = document.getElementById('symptom-result');
+    
+    // Gemini API configuration
+    const GEMINI_API_KEY = 'AIzaSyAIVfl_z8awrvi0ymEbABuWWpjcVKs6LqE';
+    const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+    
+    analyzeBtn.addEventListener('click', function() {
+      const symptoms = symptomInput.value.trim();
+      
+      if (!symptoms) {
+        showNotification('Please describe your symptoms before analyzing.', 'warning');
+        return;
+      }
+      
+      // Show loading state
+      analyzeBtn.classList.add('loading');
+      analyzeBtn.innerHTML = '<span class="btn-icon">⏳</span>Analyzing with AI...';
+      
+      // Call Gemini API for symptom analysis
+      analyzeSymptomsWithGemini(symptoms);
+    });
+    
+    async function analyzeSymptomsWithGemini(symptoms) {
+      try {
+        const response = await fetch('/api/analyze-symptoms', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            symptoms: symptoms
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`API request failed: ${response.status}`);
+        }
+
+        const aiData = await response.json();
+        
+        // Display the results directly
+        displayResults(aiData, symptoms);
+        
+      } catch (error) {
+        console.error('API Error:', error);
+        showNotification('AI analysis failed. Please try again or consult a healthcare professional.', 'danger');
+        displayFallbackResponse(symptoms);
+      } finally {
+        // Reset button state
+        analyzeBtn.classList.remove('loading');
+        analyzeBtn.innerHTML = '<span class="btn-icon">🔍</span>Analyze Symptoms';
+      }
+    }
+    
+
+    
+    function displayResults(aiData, symptoms) {
+      // Update confidence score
+      document.getElementById('confidence-score').textContent = (aiData.confidence || 85) + '%';
+      
+      // Symptom Analysis
+      document.getElementById('symptom-analysis').innerHTML = `
+        <p>${aiData.analysis}</p>
+        <p><strong>AI Analysis:</strong> Based on your description: "${symptoms}"</p>
+      `;
+      
+      // Risk Assessment
+      const riskElement = document.getElementById('risk-assessment');
+      const riskLevel = aiData.riskLevel.toLowerCase();
+      riskElement.textContent = riskLevel.charAt(0).toUpperCase() + riskLevel.slice(1) + ' Risk';
+      riskElement.className = `risk-level ${riskLevel}`;
+      
+      // Recommendations
+      const recommendationsHtml = aiData.recommendations.map(rec => `<li>${rec}</li>`).join('');
+      document.getElementById('recommendations').innerHTML = recommendationsHtml;
+      
+      // Medical Help
+      document.getElementById('medical-help').innerHTML = `<p>${aiData.medicalHelp}</p>`;
+      
+      // Show results section
+      symptomResult.style.display = 'block';
+      symptomResult.scrollIntoView({ behavior: 'smooth' });
+      
+      showNotification('AI analysis completed successfully!', 'success');
+    }
+    
+    function displayFallbackResponse(symptoms) {
+      // Generic response when AI fails
+      document.getElementById('confidence-score').textContent = '75%';
+      
+      document.getElementById('symptom-analysis').innerHTML = `
+        <p>I've analyzed your symptoms: "${symptoms}". While I can provide general guidance, it's important to consult with a healthcare professional for accurate diagnosis.</p>
+      `;
+      
+      document.getElementById('risk-assessment').textContent = 'Moderate Risk';
+      document.getElementById('risk-assessment').className = 'risk-level moderate';
+      
+      document.getElementById('recommendations').innerHTML = `
+        <li>Monitor your symptoms closely</li>
+        <li>Keep a symptom diary</li>
+        <li>Stay hydrated and get adequate rest</li>
+        <li>Consider over-the-counter remedies for symptom relief</li>
+        <li>Consult a healthcare provider for proper evaluation</li>
+      `;
+      
+      document.getElementById('medical-help').innerHTML = `
+        <p>Seek medical attention if symptoms worsen, persist for more than a few days, or if you experience severe symptoms like difficulty breathing, chest pain, confusion, or high fever.</p>
+      `;
+      
+      // Show results section
+      symptomResult.style.display = 'block';
+      symptomResult.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Notification system
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `notification notification-${type}`;
+      notification.innerHTML = `
+        <div class="notification-content">
+          <span class="notification-icon">${type === 'success' ? '✅' : type === 'warning' ? '⚠️' : type === 'danger' ? '❌' : 'ℹ️'}</span>
+          <span class="notification-message">${message}</span>
+        </div>
+        <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Auto-remove after 5 seconds
+      setTimeout(() => {
+        if (notification.parentElement) {
+          notification.remove();
+        }
+      }, 5000);
+    }
+
+    // Theme toggle handled globally in assets/js/common.js via [data-toggle-theme]
+
+    // Public health features logic
+    (function(){
+      // Voice tip
+      const voiceBtn = document.getElementById('voice-play');
+      const voiceLang = document.getElementById('voice-lang');
+      if (voiceBtn && voiceLang && 'speechSynthesis' in window) {
+        voiceBtn.addEventListener('click', () => {
+          const map = {
+            'en-IN': 'Drink water regularly, wash hands often, and avoid self-medicating.',
+            'hi-IN': 'Paani niyamit roop se peeyein, haath dhoyein, aur bina salah ke dawai na lein.',
+            'bn-IN': 'নিয়মিত পানি পান করুন, হাত ধুয়ে নিন এবং নিজে নিজে ওষুধ খাবেন না।',
+            'ta-IN': 'தீரச்சியாக தண்ணீர் குடிக்கவும், கைகளை கழுவவும், தானாக மருந்து எடுத்துக் கொள்ள வேண்டாம்.',
+            'te-IN': 'నియమితంగా నీరు త్రాగండి, చేతులు కడగండి, స్వీయ ఔషధం వద్దు.',
+            'mr-IN': 'नियमित पाणी प्या, हात धुवा आणि स्वतःहून औषध घेऊ नका.'
+          };
+          const utter = new SpeechSynthesisUtterance(map[voiceLang.value] || map['en-IN']);
+          utter.lang = voiceLang.value;
+          speechSynthesis.cancel();
+          speechSynthesis.speak(utter);
+        });
+      }
+      // Show more pictorial guidance
+      const picMore = document.getElementById('pic-more');
+      if (picMore) {
+        picMore.addEventListener('click', () => {
+          const wrap = document.querySelector('.pic-carousel');
+          if (!wrap) return;
+          ['🧴 Use sanitizer','🦟 Clear stagnant water','🩺 Follow dosage'].forEach(t => {
+            const d = document.createElement('div'); d.className = 'pic-item'; d.textContent = t; wrap.appendChild(d);
+          });
+          picMore.disabled = true;
+        });
+      }
+
+      // Festival tips toast
+      document.querySelectorAll('#festival-widget [data-tip]').forEach(btn => btn.addEventListener('click', () => {
+        showNotification(btn.getAttribute('data-tip') || '', 'info');
+      }));
+    })();
+  </script>
+  
+
+  <!-- Small Circular Floating Action Buttons -->
+
+  <button id="chatbot-fab" class="chatbot-fab" onclick="toggleChatbot()" title="AI Health">
+    🩺
+  </button>
+  
+  <!-- SOS Emergency Button -->
+  <button id="sos-button" class="sos-emergency-btn" onclick="handleSOS()" title="Emergency SOS">
+    🚨
+  </button>
+
+  <!-- Chatbot Panel -->
+  <div id="chatbot-panel" class="chatbot-panel" aria-hidden="true">
+    <div class="chatbot-header">
+      <div class="chatbot-header-left">
+        <span class="robot-icon">🩺</span>
+        <div>
+          <div class="title">AI Health Assistant</div>
+          <div class="status">Online • Ready to help</div>
+        </div>
+      </div>
+      <button id="chatbot-close" class="chatbot-close">✕</button>
+    </div>
+    <div id="chatbot-body" class="chatbot-body">
+      <div class="chatbot-msg">
+        <span class="robot-icon">🩺</span>
+        <span>Hi! I'm your AI health assistant. How can I help you today? I can assist with symptom checking, health advice, medication questions, and more.</span>
+      </div>
+    </div>
+    <div class="chatbot-input">
+      <input id="chatbot-input" type="text" placeholder="Ask me anything about your health..." />
+      <button id="chatbot-send">✈️</button>
+    </div>
+  </div>
+
+  <!-- Emergency SOS Panel -->
+  <div id="emergency-panel" class="emergency-panel" aria-hidden="true">
+    <div class="emergency-header">
+      <div class="emergency-header-left">
+        <span class="emergency-icon">🚨</span>
+        <div>
+          <div class="title">Emergency SOS</div>
+          <div class="status">Quick emergency actions</div>
+        </div>
+      </div>
+      <button id="emergency-close" class="emergency-close">✕</button>
+    </div>
+    <div class="emergency-body">
+      <div class="emergency-actions">
+        <button onclick="sendWhatsAppAlert()" class="emergency-action-btn whatsapp-btn">
+          📱 Message on WhatsApp
+        </button>
+        <button onclick="findNearbyClinics()" class="emergency-action-btn clinic-btn">
+          🏥 Nearby Clinics
+        </button>
+        <button onclick="callAmbulance()" class="emergency-action-btn ambulance-btn">
+          🚑 Ambulance
+        </button>
+        <button onclick="callPolice()" class="emergency-action-btn police-btn">
+          👮 Police
+        </button>
+      </div>
+    </div>
+        </div>
+        
+  <!-- Nearby Clinics Panel -->
+  <div id="clinics-panel" class="clinics-panel" aria-hidden="true">
+    <div class="clinics-header">
+      <div class="clinics-header-left">
+        <span class="clinics-icon">🏥</span>
+        <div>
+          <div class="title">Nearby Medical Help</div>
+          <div class="status">Hospitals & Clinics</div>
+            </div>
+            </div>
+      <button id="clinics-close" class="clinics-close">✕</button>
+            </div>
+    <div class="clinics-body">
+      <div id="clinics-results">
+          <div class="loading">Searching for nearby hospitals and clinics...</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/chatbot.js"></script>
+
+  <script>
+    // Emergency SOS functionality
+    let currentLocation = null;
+
+    // Handle SOS button click
+    function handleSOS() {
+      const emergencyPanel = document.getElementById('emergency-panel');
+      emergencyPanel.style.display = 'block';
+      emergencyPanel.setAttribute('aria-hidden', 'false');
+      getCurrentLocation();
+    }
+
+    // Close emergency panel
+    function closeEmergencyPanel() {
+      const emergencyPanel = document.getElementById('emergency-panel');
+      emergencyPanel.style.display = 'none';
+      emergencyPanel.setAttribute('aria-hidden', 'true');
+    }
+
+    // Close clinics panel
+    function closeClinicsPanel() {
+      const clinicsPanel = document.getElementById('clinics-panel');
+      clinicsPanel.style.display = 'none';
+      clinicsPanel.setAttribute('aria-hidden', 'true');
+    }
+
+    // Get current GPS location
+    function getCurrentLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            currentLocation = {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude
+            };
+          },
+          function(error) {
+            console.error('Error getting location:', error);
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 60000
+          }
+        );
+      }
+    }
+
+    // Send WhatsApp alert with location
+    function sendWhatsAppAlert() {
+      if (!currentLocation) {
+        alert('Please wait for location to be detected first.');
+        return;
+      }
+
+      const googleMapsLink = `https://www.google.com/maps?q=${currentLocation.latitude},${currentLocation.longitude}`;
+      const emergencyMessage = `🚨 EMERGENCY SOS ALERT! 🚨\n\n📍 My current location:\n${googleMapsLink}\n\n⏰ Time: ${new Date().toLocaleString()}\n\n🚑 Please send help immediately!`;
+      
+      // WhatsApp API link (you can customize the phone number)
+      const whatsappLink = `https://wa.me/911234567890?text=${encodeURIComponent(emergencyMessage)}`;
+      
+      // Open WhatsApp in new tab
+      window.open(whatsappLink, '_blank');
+      
+      // Close the panel
+      closeEmergencyPanel();
+    }
+
+    // Call ambulance
+    function callAmbulance() {
+      if (confirm('Call Ambulance (102)?')) {
+        window.location.href = 'tel:102';
+      }
+      closeEmergencyPanel();
+    }
+
+    // Call police
+    function callPolice() {
+      if (confirm('Call Police (100)?')) {
+        window.location.href = 'tel:100';
+      }
+      closeEmergencyPanel();
+    }
+
+    // Find nearby clinics
+    function findNearbyClinics() {
+      if (!currentLocation) {
+        alert('Please wait for location to be detected first.');
+        return;
+      }
+
+      closeEmergencyPanel();
+      const clinicsPanel = document.getElementById('clinics-panel');
+      clinicsPanel.style.display = 'block';
+      clinicsPanel.setAttribute('aria-hidden', 'false');
+      searchNearbyClinics();
+    }
+
+    // Search for nearby clinics (mock data for demo)
+    function searchNearbyClinics() {
+      const resultsElement = document.getElementById('clinics-results');
+      resultsElement.innerHTML = '<div class="loading">Searching for nearby hospitals and clinics...</div>';
+
+      // Simulate API call delay
+      setTimeout(() => {
+        // Mock data - in real implementation, use Google Places API
+        const mockClinics = [
+          {
+            name: 'City General Hospital',
+            distance: '0.8 km',
+            address: '123 Main Street, City Center',
+            phone: '+91-123-456-7890'
+          },
+          {
+            name: 'Community Medical Clinic',
+            distance: '1.2 km',
+            address: '456 Health Avenue, Downtown',
+            phone: '+91-123-456-7891'
+          },
+          {
+            name: 'Emergency Care Center',
+            distance: '1.5 km',
+            address: '789 Emergency Road, Medical District',
+            phone: '+91-123-456-7892'
+          }
+        ];
+
+        displayClinics(mockClinics);
+      }, 1500);
+    }
+
+    // Display clinics in the panel
+    function displayClinics(clinics) {
+      const resultsElement = document.getElementById('clinics-results');
+      
+      let html = '';
+      clinics.forEach(clinic => {
+        html += `
+          <div class="clinic-card">
+            <h4>${clinic.name}</h4>
+            <p><strong>📍 Location:</strong> ${clinic.address}</p>
+            <p><strong>📞 Phone:</strong> <a href="tel:${clinic.phone}">${clinic.phone}</a></p>
+          </div>
+        `;
+      });
+      
+      resultsElement.innerHTML = html;
+    }
+
+    // Call specific contact
+    function callContact(number) {
+      if (confirm(`Call ${number}?`)) {
+        window.location.href = `tel:${number}`;
+      }
+    }
+
+    // Get directions to clinic
+    function getDirections(clinicName, userLat, userLng) {
+      // In real implementation, you would use the clinic's actual coordinates
+      // For demo purposes, we'll use a nearby point
+      const clinicLat = userLat + 0.001;
+      const clinicLng = userLng + 0.001;
+      
+      const directionsLink = `https://www.google.com/maps/dir/${userLat},${userLng}/${clinicLat},${clinicLng}`;
+      window.open(directionsLink, '_blank');
+    }
+
+    // Close panels when clicking outside
+    window.onclick = function(event) {
+      const emergencyPanel = document.getElementById('emergency-panel');
+      const clinicsPanel = document.getElementById('clinics-panel');
+      
+      if (event.target === emergencyPanel) {
+        closeEmergencyPanel();
+      }
+      if (event.target === clinicsPanel) {
+        closeClinicsPanel();
+      }
+    }
+
+    // Ensure buttons are visible
+    document.addEventListener('DOMContentLoaded', function() {
+      const aiBtn = document.getElementById('chatbot-fab');
+      const sosBtn = document.getElementById('sos-button');
+      
+      if (aiBtn) {
+        aiBtn.style.display = 'flex';
+        aiBtn.style.visibility = 'visible';
+        aiBtn.style.opacity = '1';
+        console.log('AI Health button found and made visible');
+      } else {
+        console.log('AI Health button not found');
+      }
+
+      if (sosBtn) {
+        sosBtn.style.display = 'flex';
+        sosBtn.style.visibility = 'visible';
+        sosBtn.style.opacity = '1';
+        console.log('SOS button found and made visible');
+      } else {
+        console.log('SOS button not found');
+      }
+
+      // Add event listener for emergency close button
+      const emergencyCloseBtn = document.getElementById('emergency-close');
+      if (emergencyCloseBtn) {
+        emergencyCloseBtn.addEventListener('click', closeEmergencyPanel);
+      }
+
+      // Add event listener for clinics close button
+      const clinicsCloseBtn = document.getElementById('clinics-close');
+      if (clinicsCloseBtn) {
+        clinicsCloseBtn.addEventListener('click', closeClinicsPanel);
+      }
+
+      // Check if page was loaded with #chatbot hash and open chatbot
+      if (window.location.hash === '#chatbot') {
+        setTimeout(() => {
+          if (typeof toggleChatbot === 'function') {
+            toggleChatbot();
+          }
+        }, 500);
+      }
+    });
+  </script>
+</body>
+</html>
+
+

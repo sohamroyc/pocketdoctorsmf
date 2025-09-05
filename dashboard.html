@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pocket Doctor — Health Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/js/languages.js"></script>
+  <style>
+    .dash-hero { text-align: center; padding: 40px 0 10px; }
+    .dash-hero h1 { font-size: clamp(28px, 4vw, 44px); margin: 0 0 6px; }
+    .dash-hero p { color: var(--muted); margin: 0; }
+    .dash-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 22px; margin-top: 18px; }
+    .card-gradient { border: none; color: var(--text); box-shadow: var(--shadow-lg); border-radius: 18px; }
+    .grad-green { background: linear-gradient(135deg, #20c997, #2f80ed); }
+    .grad-purple { background: linear-gradient(135deg, #c471f5, #fa71cd); }
+    .grad-orange { background: linear-gradient(135deg, #ff7a59, #ff6b00); }
+    .score { display:flex; align-items:center; justify-content:center; height:120px; width:120px; border-radius:999px; background: rgba(255,255,255,0.22); margin: 12px 0; font-size: 36px; font-weight: 800; }
+    .pill-row { display:grid; gap:10px; }
+    .pill-row .pill-item { background: rgba(0,0,0,0.05); border-radius: 12px; padding: 14px; font-weight: 600; display:flex; align-items:center; gap:10px; color: var(--text); text-decoration: none; }
+    .pill-row .pill-item span { opacity: 0.9; }
+
+    /* Header: apply dark style only when dark mode is active */
+    .app-pharma.dark .qa-header { background: #1e293b; border-bottom: 1px solid #334155; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .app-pharma.dark .card-gradient { color: #fff; }
+    .app-pharma.dark .pill-row .pill-item { background: rgba(255,255,255,0.18); color: #fff; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .dash-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="app-pharma">
+  <header class="qa-header">
+    <div class="container header-inner">
+      <div class="header-left">
+        <div class="brand">
+          <a class="brand-link" href="index.html"><span class="logo" aria-hidden="true">🫀</span><span class="brand-name">Pocket Doctor</span></a>
+        </div>
+        <div class="header-meta">
+          <span class="pill pill-green">HIPAA Compliant</span>
+          <span class="pill pill-pink">24/7 Available</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a class="btn btn-accent" href="wellness.html">❤ Wellness</a>
+        <button class="btn btn-ghost" data-lang-toggle type="button">🌐 EN</button>
+        <button class="btn btn-ghost" data-toggle-theme type="button" data-translate="theme">🌙 Theme</button>
+        <a class="btn btn-outline" href="login.html">🔐 Login</a>
+        <a class="btn btn-primary-gradient" href="register.html">👤 Register</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="dash-hero">
+        <h1>Health Dashboard</h1>
+        <p>Your comprehensive health overview</p>
+      </div>
+      <div class="dash-grid">
+        <div class="card card-gradient grad-green">
+          <h2>Health Score</h2>
+          <div class="score">85</div>
+          <div>Excellent condition</div>
+          <div style="height:10px;background:rgba(255,255,255,0.3);border-radius:999px;margin:14px 0;">
+            <div style="height:10px;width:85%;background:#fff;border-radius:999px"></div>
+          </div>
+          <div>Keep up the great work!</div>
+        </div>
+        <div class="card card-gradient grad-purple">
+          <h2>Quick Actions</h2>
+          <div class="pill-row" style="margin-top:10px;">
+            <div class="pill-item">⚕️ <span>Check Symptoms</span></div>
+            <div class="pill-item">💊 <span>Medication Reminder</span></div>
+            <div class="pill-item">❤️ <span>Vital Signs</span></div>
+          </div>
+        </div>
+        <div class="card card-gradient grad-orange">
+          <h2>Emergency</h2>
+          <div class="pill-row" style="margin-top:10px;">
+            <a class="pill-item" href="tel:112">📞 <span>Call 112</span></a>
+            <a class="pill-item" href="https://www.nhp.gov.in/hospital-directory" target="_blank" rel="noopener">📍 <span>Find Hospital</span></a>
+            <a class="pill-item" href="index.html#contact">👨‍⚕️ <span>Contact Doctor</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="qa-footer">
+    <div class="container footer-bottom">
+      <div>© <span id="year"></span> Pocket Doctor</div>
+      <div>Not a substitute for professional medical advice.</div>
+    </div>
+  </footer>
+
+  <script src="assets/js/common.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
+
+

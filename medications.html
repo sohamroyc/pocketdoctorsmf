@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pocket Doctor — Medication Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/js/languages.js"></script>
+</head>
+<body>
+  <header class="qa-header">
+    <div class="container header-inner">
+      <div class="header-left">
+        <div class="brand">
+          <a class="brand-link" href="index.html"><span class="logo" aria-hidden="true">🫀</span><span class="brand-name">Pocket Doctor</span></a>
+        </div>
+        <div class="header-meta">
+          <span class="pill pill-green">HIPAA Compliant</span>
+          <span class="pill pill-pink">24/7 Available</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a class="btn btn-accent" href="wellness.html" data-translate="wellness">❤ Wellness</a>
+        <button class="btn btn-ghost" data-lang-toggle type="button">🌐 EN</button>
+        <button class="btn btn-ghost" data-toggle-theme type="button" data-translate="theme">🌙 Theme</button>
+        <a class="btn btn-outline" href="login.html" data-translate="login">🔐 Login</a>
+        <a class="btn btn-primary-gradient" href="register.html" data-translate="register">👤 Register</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section medication-hero">
+      <div class="container">
+        <div class="medication-header">
+          <div class="medication-logo">💊</div>
+          <h1>Smart Medication Manager</h1>
+          <p class="medication-subtitle">Track medications, set reminders, and check interactions safely</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="medication-grid">
+          <!-- Add Medication Section -->
+          <div class="medication-card">
+            <div class="card-header">
+              <h2>➕ Add New Medication</h2>
+              <p>Add medications with detailed scheduling and reminders</p>
+            </div>
+            
+            <form id="med-form" class="medication-form">
+              <div class="form-group">
+                <label for="med-name" class="form-label">
+                  <span class="label-icon">💊</span>
+                  Medication Name
+                </label>
+                <input id="med-name" class="form-input" placeholder="e.g., Paracetamol, Ibuprofen" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="med-dose" class="form-label">
+                  <span class="label-icon">📏</span>
+                  Dosage
+                </label>
+                <input id="med-dose" class="form-input" placeholder="e.g., 500 mg, 1 tablet">
+        </div>
+
+              <div class="form-group">
+                <label for="med-frequency" class="form-label">
+                  <span class="label-icon">🔄</span>
+                  Frequency
+                </label>
+                <select id="med-frequency" class="form-input">
+                  <option value="once">Once daily</option>
+                  <option value="twice">Twice daily</option>
+                  <option value="thrice">Three times daily</option>
+                  <option value="as-needed">As needed</option>
+                  <option value="custom">Custom schedule</option>
+                </select>
+            </div>
+              
+              <div class="form-group">
+                <label for="med-time" class="form-label">
+                  <span class="label-icon">⏰</span>
+                  Preferred Time
+                </label>
+                <input id="med-time" type="time" class="form-input">
+            </div>
+              
+              <div class="form-group">
+                <label for="med-notes" class="form-label">
+                  <span class="label-icon">📝</span>
+                  Notes (Optional)
+                </label>
+                <textarea id="med-notes" class="form-input" placeholder="Special instructions, side effects to watch for..." rows="3"></textarea>
+            </div>
+              
+              <div class="form-group">
+                <label class="checkbox-container">
+                  <input type="checkbox" id="med-reminder" class="checkbox-input" checked>
+                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-label">Set daily reminders</span>
+                </label>
+            </div>
+              
+              <button class="btn btn-primary btn-lg medication-btn" type="submit">
+                <span class="btn-icon">➕</span>
+                Add Medication
+              </button>
+          </form>
+          </div>
+
+          <!-- Current Medications -->
+          <div class="medication-card">
+            <div class="card-header">
+              <h2>📋 Current Medications</h2>
+              <p>Your active medication list and schedule</p>
+            </div>
+            
+            <div id="med-list" class="medication-list">
+              <div class="empty-state">
+                <div class="empty-icon">💊</div>
+                <p>No medications added yet</p>
+                <small>Add your first medication to get started</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interaction Checker -->
+        <div class="medication-card interaction-section">
+          <div class="card-header">
+            <h2>⚠️ Drug Interaction Checker</h2>
+            <p>Check for potential interactions between medications</p>
+          </div>
+          
+          <div class="interaction-form">
+            <div class="interaction-inputs">
+              <div class="form-group">
+                <label for="int-a" class="form-label">Medicine A</label>
+                <input id="int-a" class="form-input" placeholder="Enter first medication name">
+              </div>
+              
+              <div class="interaction-separator">
+                <span>+</span>
+              </div>
+              
+              <div class="form-group">
+                <label for="int-b" class="form-label">Medicine B</label>
+                <input id="int-b" class="form-input" placeholder="Enter second medication name">
+              </div>
+            </div>
+            
+            <button id="int-check" class="btn btn-warning btn-lg">
+              <span class="btn-icon">🔍</span>
+              Check Interactions
+            </button>
+          </div>
+          
+          <div id="int-result" class="interaction-result"></div>
+        </div>
+
+        <!-- Medication History & Analytics -->
+        <div class="medication-grid">
+          <div class="medication-card">
+            <div class="card-header">
+              <h2>📊 Medication Analytics</h2>
+              <p>Track your medication adherence and patterns</p>
+            </div>
+            
+            <div class="analytics-grid">
+              <div class="analytics-item">
+                <div class="analytics-value" id="total-meds">0</div>
+                <div class="analytics-label">Active Medications</div>
+              </div>
+              
+              <div class="analytics-item">
+                <div class="analytics-value" id="adherence-rate">100%</div>
+                <div class="analytics-label">Adherence Rate</div>
+              </div>
+              
+              <div class="analytics-item">
+                <div class="analytics-value" id="next-dose">--</div>
+                <div class="analytics-label">Next Dose</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="medication-card">
+            <div class="card-header">
+              <h2>🔔 Reminder Settings</h2>
+              <p>Customize your medication reminders</p>
+            </div>
+            
+            <div class="reminder-settings">
+              <div class="form-group">
+                <label class="checkbox-container">
+                  <input type="checkbox" id="push-notifications" class="checkbox-input" checked>
+                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-label">Push notifications</span>
+                </label>
+              </div>
+              
+              <div class="form-group">
+                <label class="checkbox-container">
+                  <input type="checkbox" id="email-reminders" class="checkbox-input">
+                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-label">Email reminders</span>
+                </label>
+              </div>
+              
+              <div class="form-group">
+                <label class="checkbox-container">
+                  <input type="checkbox" id="sms-reminders" class="checkbox-input">
+                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-label">SMS reminders</span>
+                </label>
+        </div>
+
+              <div class="form-group">
+                <label for="reminder-time" class="form-label">Reminder Time</label>
+                <input id="reminder-time" type="time" class="form-input" value="08:00">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="qa-footer">
+    <div class="container footer-bottom">
+      <div>© <span id="year"></span> Pocket Doctor</div>
+      <div>Not a substitute for professional medical advice.</div>
+    </div>
+  </footer>
+
+  <script src="assets/js/common.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // Enhanced Medication Management
+    const form = document.getElementById('med-form');
+    const list = document.getElementById('med-list');
+    const meds = [];
+    
+    // Load medications from localStorage
+    function loadMedications() {
+      const saved = localStorage.getItem('pocketDoctor_medications');
+      if (saved) {
+        meds.push(...JSON.parse(saved));
+        render();
+        updateAnalytics();
+      }
+    }
+    
+    // Save medications to localStorage
+    function saveMedications() {
+      localStorage.setItem('pocketDoctor_medications', JSON.stringify(meds));
+    }
+    
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('med-name').value.trim();
+      const dose = document.getElementById('med-dose').value.trim();
+      const frequency = document.getElementById('med-frequency').value;
+      const time = document.getElementById('med-time').value;
+      const notes = document.getElementById('med-notes').value.trim();
+      const reminder = document.getElementById('med-reminder').checked;
+      
+      if (!name) return;
+      
+      const medication = {
+        id: Date.now(),
+        name,
+        dose,
+        frequency,
+        time,
+        notes,
+        reminder,
+        added: new Date().toISOString(),
+        taken: []
+      };
+      
+      meds.push(medication);
+      form.reset();
+      document.getElementById('med-reminder').checked = true;
+      
+      saveMedications();
+      render();
+      updateAnalytics();
+      
+      // Show success message
+      showNotification('Medication added successfully!', 'success');
+    });
+    
+    function render() {
+      if (meds.length === 0) {
+        list.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">💊</div>
+            <p>No medications added yet</p>
+            <small>Add your first medication to get started</small>
+          </div>
+        `;
+        return;
+      }
+      
+      list.innerHTML = meds.map(med => `
+        <div class="medication-item" data-id="${med.id}">
+          <div class="medication-info">
+            <div class="medication-name">${med.name}</div>
+            <div class="medication-details">
+              ${med.dose ? `<span class="med-dose">${med.dose}</span>` : ''}
+              ${med.frequency ? `<span class="med-frequency">${getFrequencyText(med.frequency)}</span>` : ''}
+              ${med.time ? `<span class="med-time">${med.time}</span>` : ''}
+            </div>
+            ${med.notes ? `<div class="med-notes">${med.notes}</div>` : ''}
+          </div>
+          <div class="medication-actions">
+            <button class="btn btn-sm btn-success" onclick="markTaken(${med.id})">
+              <span class="btn-icon">✅</span>
+              Taken
+            </button>
+            <button class="btn btn-sm btn-outline" onclick="editMedication(${med.id})">
+              <span class="btn-icon">✏️</span>
+              Edit
+            </button>
+            <button class="btn btn-sm btn-danger" onclick="removeMedication(${med.id})">
+              <span class="btn-icon">🗑️</span>
+              Remove
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function getFrequencyText(frequency) {
+      const frequencyMap = {
+        'once': 'Once daily',
+        'twice': 'Twice daily',
+        'thrice': 'Three times daily',
+        'as-needed': 'As needed',
+        'custom': 'Custom schedule'
+      };
+      return frequencyMap[frequency] || frequency;
+    }
+    
+    function markTaken(id) {
+      const med = meds.find(m => m.id === id);
+      if (med) {
+        med.taken.push(new Date().toISOString());
+        saveMedications();
+        updateAnalytics();
+        showNotification('Medication marked as taken!', 'success');
+      }
+    }
+    
+    function editMedication(id) {
+      const med = meds.find(m => m.id === id);
+      if (med) {
+        // Populate form for editing
+        document.getElementById('med-name').value = med.name;
+        document.getElementById('med-dose').value = med.dose || '';
+        document.getElementById('med-frequency').value = med.frequency;
+        document.getElementById('med-time').value = med.time || '';
+        document.getElementById('med-notes').value = med.notes || '';
+        document.getElementById('med-reminder').checked = med.reminder;
+        
+        // Remove the old medication
+        removeMedication(id);
+        
+        // Scroll to form
+        document.getElementById('med-form').scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    
+    function removeMedication(id) {
+      const index = meds.findIndex(m => m.id === id);
+      if (index > -1) {
+        meds.splice(index, 1);
+        saveMedications();
+      render();
+        updateAnalytics();
+        showNotification('Medication removed!', 'info');
+      }
+    }
+    
+    function updateAnalytics() {
+      document.getElementById('total-meds').textContent = meds.length;
+      
+      // Calculate adherence rate
+      const totalDoses = meds.reduce((sum, med) => {
+        const daysSinceAdded = Math.ceil((Date.now() - new Date(med.added)) / (1000 * 60 * 60 * 24));
+        const expectedDoses = daysSinceAdded * getDosesPerDay(med.frequency);
+        return sum + expectedDoses;
+      }, 0);
+      
+      const takenDoses = meds.reduce((sum, med) => sum + med.taken.length, 0);
+      const adherenceRate = totalDoses > 0 ? Math.round((takenDoses / totalDoses) * 100) : 100;
+      
+      document.getElementById('adherence-rate').textContent = adherenceRate + '%';
+      
+      // Find next dose time
+      const now = new Date();
+      const nextDose = meds
+        .filter(med => med.time && med.reminder)
+        .map(med => {
+          const [hours, minutes] = med.time.split(':');
+          const doseTime = new Date();
+          doseTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+          
+          if (doseTime <= now) {
+            doseTime.setDate(doseTime.getDate() + 1);
+          }
+          
+          return { time: doseTime, name: med.name };
+        })
+        .sort((a, b) => a.time - b.time)[0];
+      
+      if (nextDose) {
+        document.getElementById('next-dose').textContent = nextDose.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      } else {
+        document.getElementById('next-dose').textContent = '--';
+      }
+    }
+    
+    function getDosesPerDay(frequency) {
+      const doseMap = {
+        'once': 1,
+        'twice': 2,
+        'thrice': 3,
+        'as-needed': 0,
+        'custom': 1
+      };
+      return doseMap[frequency] || 1;
+    }
+    
+    // Enhanced Interaction Checker
+    const interactionDatabase = {
+      'aspirin': {
+        'ibuprofen': { level: 'moderate', description: 'May increase risk of bleeding when taken together' },
+        'warfarin': { level: 'severe', description: 'High risk of bleeding - avoid combination' },
+        'clopidogrel': { level: 'moderate', description: 'Increased bleeding risk' }
+      },
+      'ibuprofen': {
+        'aspirin': { level: 'moderate', description: 'May increase risk of bleeding when taken together' },
+        'warfarin': { level: 'moderate', description: 'Increased bleeding risk' },
+        'lithium': { level: 'moderate', description: 'May increase lithium levels' }
+      },
+      'warfarin': {
+        'aspirin': { level: 'severe', description: 'High risk of bleeding - avoid combination' },
+        'ibuprofen': { level: 'moderate', description: 'Increased bleeding risk' },
+        'ginkgo': { level: 'moderate', description: 'May increase bleeding risk' }
+      },
+      'paracetamol': {
+        'alcohol': { level: 'moderate', description: 'May increase liver damage risk' },
+        'warfarin': { level: 'moderate', description: 'May affect blood clotting' }
+      }
+    };
+    
+    document.getElementById('int-check').addEventListener('click', function() {
+      const medA = document.getElementById('int-a').value.trim().toLowerCase();
+      const medB = document.getElementById('int-b').value.trim().toLowerCase();
+      
+      if (!medA || !medB) {
+        showInteractionResult('Please enter both medication names', 'warning');
+        return;
+      }
+      
+      // Check for interactions
+      let interaction = null;
+      
+      if (interactionDatabase[medA] && interactionDatabase[medA][medB]) {
+        interaction = interactionDatabase[medA][medB];
+      } else if (interactionDatabase[medB] && interactionDatabase[medB][medA]) {
+        interaction = interactionDatabase[medB][medA];
+      }
+      
+      if (interaction) {
+        const levelClass = `interaction-${interaction.level}`;
+        showInteractionResult(`
+          <div class="interaction-alert ${levelClass}">
+            <div class="interaction-header">
+              <span class="interaction-level">${interaction.level.toUpperCase()}</span>
+              <span class="interaction-icon">⚠️</span>
+            </div>
+            <div class="interaction-description">${interaction.description}</div>
+            <div class="interaction-advice">
+              <strong>Recommendation:</strong> Consult your healthcare provider before taking these medications together.
+            </div>
+          </div>
+        `, 'interaction');
+      } else {
+        showInteractionResult(`
+          <div class="interaction-safe">
+            <div class="interaction-header">
+              <span class="interaction-level">SAFE</span>
+              <span class="interaction-icon">✅</span>
+            </div>
+            <div class="interaction-description">
+              No known interactions found between <strong>${medA}</strong> and <strong>${medB}</strong>.
+            </div>
+            <div class="interaction-advice">
+              <strong>Note:</strong> This is a demo database. Always consult your healthcare provider for medical advice.
+            </div>
+          </div>
+        `, 'safe');
+      }
+    });
+    
+    function showInteractionResult(content, type) {
+      const resultDiv = document.getElementById('int-result');
+      resultDiv.innerHTML = content;
+      resultDiv.className = `interaction-result interaction-${type}`;
+    }
+    
+    // Notification system
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `notification notification-${type}`;
+      notification.innerHTML = `
+        <div class="notification-content">
+          <span class="notification-icon">${type === 'success' ? '✅' : type === 'warning' ? '⚠️' : type === 'danger' ? '❌' : 'ℹ️'}</span>
+          <span class="notification-message">${message}</span>
+        </div>
+        <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Auto-remove after 5 seconds
+      setTimeout(() => {
+        if (notification.parentElement) {
+          notification.remove();
+        }
+      }, 5000);
+    }
+    
+    // Initialize
+    loadMedications();
+    
+    // Set up reminder simulation
+    setInterval(() => {
+      const now = new Date();
+      const currentTime = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0');
+      
+      meds.forEach(med => {
+        if (med.reminder && med.time === currentTime) {
+          showNotification(`Time to take ${med.name}!`, 'warning');
+        }
+      });
+    }, 60000); // Check every minute
+
+    // Theme Toggle Functionality
+    const themeToggle = document.querySelector('[data-toggle-theme]');
+    const body = document.body;
+
+    // Check for saved theme preference or default to light mode
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    body.classList.add(currentTheme);
+
+    // Update button text based on current theme
+    if (currentTheme === 'dark') {
+      themeToggle.innerHTML = '☀️ Theme';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      const isDark = body.classList.contains('dark');
+      
+      if (isDark) {
+        themeToggle.innerHTML = '☀️ Theme';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        themeToggle.innerHTML = '🌙 Theme';
+        localStorage.setItem('theme', 'light');
+      }
+    });
+  </script>
+</body>
+</html>
+
+

@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pocket Doctor — Wellness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css?v=1.7">
+  <script src="assets/js/languages.js"></script>
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary-color: #10b981;
+      --accent-color: #f59e0b;
+      --danger-color: #ef4444;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --info-color: #3b82f6;
+      --dark-bg: #0f172a;
+      --dark-surface: #1e293b;
+      --dark-card: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border-color: #475569;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+    }
+
+    /* Professional Header (dark only; light handled by global styles) */
+    .app-pharma.dark .qa-header {
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: #f8fafc;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, #3b82f6, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .brand-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .header-meta {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .pill {
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .pill-green {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .pill-pink {
+      background: rgba(236, 72, 153, 0.1);
+      color: #ec4899;
+      border: 1px solid rgba(236, 72, 153, 0.2);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* Professional Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: #10b981;
+      color: white;
+      box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+    }
+
+    .btn-primary:hover {
+      background: #059669;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-primary-gradient {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+    }
+
+    .btn-primary-gradient:hover {
+      background: linear-gradient(135deg, #5a67d8, #6b46c1);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #f8fafc;
+      border: 1px solid #475569;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #f8fafc;
+    }
+
+    .btn-accent {
+      background: #ef4444;
+      color: white;
+      box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+    }
+
+    .btn-accent:hover {
+      background: #dc2626;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+    }
+
+    /* Professional Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #f6fafc 0%, #eef3f8 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 4rem 0 2.25rem;
+      margin-bottom: 12px;
+    }
+
+    .app-pharma.dark .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      opacity: 0.5;
+    }
+
+    .text-gradient {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .muted {
+      color: var(--text-secondary);
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .hero .cta { justify-content: center; }
+
+    /* Tighter section spacing for Wellness */
+    .section { padding: 16px 0 32px; }
+
+    /* Professional Wellness Grid */
+    .wellness-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(320px, 520px));
+      gap: 24px 28px;
+      margin: 24px auto 36px;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .wellness-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 260px;
+    }
+
+    .wellness-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary-color);
+    }
+
+    .wellness-card h2 {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .wellness-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      border-radius: var(--radius-lg);
+      font-size: 1.5rem;
+    }
+
+    .bg-hydration {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    }
+
+    .bg-sleep {
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    }
+
+    .bg-movement {
+      background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+    .bg-nutrition {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    .wellness-card p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .goal-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .goal-chip {
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .goal-chip:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .mini-timer {
+      background: var(--panel-2);
+      color: var(--text);
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-md);
+      font-family: 'Courier New', monospace;
+      font-weight: 600;
+      border: 1px solid var(--border);
+    }
+
+    .expand {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* Badge Bar */
+    .badge-bar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge-soft {
+      background: var(--panel-2);
+      color: var(--muted);
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      border: 1px solid var(--border);
+    }
+
+    .streak {
+      color: var(--accent-color);
+      font-weight: 700;
+    }
+
+    /* Poll Card */
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Professional Footer */
+    .qa-footer {
+      background: var(--dark-bg);
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border-color);
+      padding: 2rem 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* Small Circular Floating Action Buttons */
+    .sos-emergency-btn, .chatbot-fab {
+      position: fixed !important;
+      bottom: 1rem !important;
+      right: 1rem !important;
+      z-index: 9999 !important;
+      border: none !important;
+      border-radius: 50% !important;
+      width: 50px !important;
+      height: 50px !important;
+      padding: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-weight: 600 !important;
+      transition: all 0.3s ease !important;
+      cursor: pointer !important;
+      font-size: 1.2rem !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .sos-emergency-btn {
+      bottom: 5rem !important;
+      background: #ef4444 !important;
+      color: white !important;
+    }
+
+    .sos-emergency-btn:hover {
+      background: #dc2626 !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4) !important;
+    }
+
+    .chatbot-fab {
+      background: #10b981 !important;
+      color: white !important;
+    }
+
+    .chatbot-fab:hover {
+      background: #059669 !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4) !important;
+    }
+
+    /* Responsive Design */
+    @media (min-width: 1024px) {
+      /* Match dashboard-style 2-column layout with centered grid */
+      .wellness-grid { grid-template-columns: repeat(2, minmax(360px, 520px)); }
+      .wellness-grid .wellness-card { min-height: 300px; }
+    }
+
+    @media (max-width: 768px) {
+      .text-gradient {
+        font-size: 2.5rem;
+      }
+      
+      .header-actions {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      
+      .cta {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .wellness-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .badge-bar {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .sos-emergency-btn, .chatbot-fab {
+        bottom: 0.75rem;
+        padding: 0.5rem 0.875rem;
+        font-size: 0.75rem;
+      }
+      
+      .sos-emergency-btn {
+        left: 0.75rem;
+      }
+      
+      .chatbot-fab {
+        right: 0.75rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .sos-emergency-btn, .chatbot-fab {
+        bottom: 0.5rem;
+        padding: 0.4rem 0.75rem;
+        font-size: 0.7rem;
+        gap: 0.25rem;
+      }
+      
+      .sos-emergency-btn {
+        left: 0.5rem;
+      }
+      
+      .chatbot-fab {
+        right: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body class="app-pharma">
+  <header class="qa-header">
+    <div class="container header-inner">
+      <div class="header-left">
+        <div class="brand">
+          <a class="brand-link" href="index.html"><span class="logo" aria-hidden="true">🫀</span><span class="brand-name" data-translate="brand-name">Pocket Doctor</span></a>
+        </div>
+        <div class="header-meta">
+          <span class="pill pill-green" data-translate="hipaa-compliant">HIPAA Compliant</span>
+          <span class="pill pill-pink" data-translate="available-24-7">24/7 Available</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a class="btn btn-accent" href="wellness.html" data-translate="wellness">❤ Wellness</a>
+        <button class="btn btn-ghost" data-lang-toggle type="button">🌐 EN</button>
+        <button class="btn btn-ghost" data-toggle-theme type="button" data-translate="theme">🌙 Theme</button>
+        <a class="btn btn-outline" href="login.html" data-translate="login">🔐 Login</a>
+        <a class="btn btn-primary-gradient" href="register.html" data-translate="register">👤 Register</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1 class="text-gradient" style="margin:0 0 8px;" data-translate="wellness-hub">Wellness Hub</h1>
+        <p class="muted" style="margin:0 0 18px;" data-translate="wellness-subtitle">Daily tips for staying healthy and resilient.</p>
+        <div class="cta">
+          <button id="wellness-random" class="btn btn-primary" data-translate="surprise-me">Surprise Me</button>
+          <button id="wellness-reminder" class="btn btn-outline" data-translate="daily-reminder">Daily Reminder</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container wellness-grid">
+        <div class="wellness-card" data-title="Hydration" data-tip="Drink enough water throughout the day. Aim for steady intake, not large amounts at once.">
+          <h2><span class="wellness-icon bg-hydration">💧</span><span data-translate="hydration">Hydration</span></h2>
+          <p data-translate="hydration-tip">Drink enough water throughout the day. Aim for steady intake, not large amounts at once.</p>
+          <div class="goal-row">
+            <button class="goal-chip" data-goal="hydration" data-translate="mark-2l">Mark 2L</button>
+            <span class="mini-timer" data-timer>00:30</span>
+          </div>
+          <div class="expand" data-translate="hydration-detail">
+            Small sips every 20–30 minutes help better than chugging all at once.
+          </div>
+        </div>
+        <div class="wellness-card" data-title="Sleep" data-tip="7–9 hours for most adults. Keep a consistent schedule and limit screens before bed.">
+          <h2><span class="wellness-icon bg-sleep">🌙</span><span data-translate="sleep">Sleep</span></h2>
+          <p data-translate="sleep-tip">7–9 hours for most adults. Keep a consistent schedule and limit screens before bed.</p>
+          <div class="goal-row">
+            <button class="goal-chip" data-goal="sleep" data-translate="sleep-goal">7+ hrs</button>
+          </div>
+          <div class="expand" data-translate="sleep-detail">
+            Keep your room cool and dark. Avoid heavy meals 2–3 hours before bedtime.
+          </div>
+        </div>
+        <div class="wellness-card" data-title="Movement" data-tip="Regular light-to-moderate activity supports heart health and mood. Walks count.">
+          <h2><span class="wellness-icon bg-movement">🏃</span><span data-translate="movement">Movement</span></h2>
+          <p data-translate="movement-tip">Regular light-to-moderate activity supports heart health and mood. Walks count.</p>
+          <div class="goal-row">
+            <button class="goal-chip" data-goal="steps" data-translate="steps-goal">5k steps</button>
+          </div>
+          <div class="expand" data-translate="movement-detail">
+            Break long sitting with 2–3 minute stretch breaks every hour.
+          </div>
+        </div>
+        <div class="wellness-card" data-title="Nutrition" data-tip="Favor whole foods, colorful vegetables, lean proteins, and healthy fats.">
+          <h2><span class="wellness-icon bg-nutrition">🍽️</span><span data-translate="nutrition">Nutrition</span></h2>
+          <p data-translate="nutrition-tip">Favor whole foods, colorful vegetables, lean proteins, and healthy fats.</p>
+          <div class="goal-row">
+            <button class="goal-chip" data-goal="veggies" data-translate="veggies-goal">3 servings veg</button>
+          </div>
+          <div class="expand" data-translate="nutrition-detail">
+            Build plates with half veggies, quarter protein, quarter whole grains.
+          </div>
+        </div>
+      </div>
+      <div class="container badge-bar">
+        <span class="badge-soft">💡 <span data-translate="tip-history">Tip history</span>: <span id="tip-history-count">0</span></span>
+        <span class="badge-soft">🔥 Streak: <span id="streak" class="streak">0</span> <span data-translate="streak-days">days</span></span>
+        <span class="badge-soft" id="quote"></span>
+      </div>
+      <div class="container" style="margin-top:12px;">
+        <div id="poll" class="card" style="max-width:700px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+            <div><span data-translate="quick-poll">Quick Poll</span>: <span data-translate="sleep-poll-question">Did you sleep 7+ hours yesterday?</span></div>
+            <div>
+              <button class="btn btn-outline" data-poll="yes" data-translate="yes">Yes</button>
+              <button class="btn btn-outline" data-poll="no" data-translate="no">No</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="qa-footer">
+    <div class="container footer-inner">
+      <div>© <span id="year"></span> <span data-translate="brand-name">Pocket Doctor</span></div>
+      <div data-translate="medical-disclaimer">Information is educational and not medical advice.</div>
+    </div>
+  </footer>
+
+  <!-- Small Circular Floating Action Buttons -->
+
+  <button id="chatbot-fab" class="chatbot-fab" onclick="window.location.href='index.html#chatbot'" title="AI Health">
+    🩺
+  </button>
+
+  <script src="assets/js/common.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    (function(){
+      const cards = Array.from(document.querySelectorAll('.wellness-card'));
+      const randomBtn = document.getElementById('wellness-random');
+      const reminderBtn = document.getElementById('wellness-reminder');
+      const historyKey = 'pd_tip_history';
+      const streakKey = 'pd_streak_days';
+      const lastSeenKey = 'pd_last_seen_date';
+      const quoteEl = document.getElementById('quote');
+      const historyCountEl = document.getElementById('tip-history-count');
+      const streakEl = document.getElementById('streak');
+
+      if (randomBtn) {
+        randomBtn.addEventListener('click', () => {
+          if (!cards.length) return;
+          const pick = cards[Math.floor(Math.random()*cards.length)];
+          const title = pick.dataset.title;
+          const tip = pick.dataset.tip;
+          showNotification(`${title}: ${tip}`, 'info');
+          pick.scrollIntoView({behavior:'smooth', block:'center'});
+          pick.classList.remove('shuffle-anim');
+          void pick.offsetWidth;
+          pick.classList.add('shuffle-anim');
+          try {
+            const now = new Date().toISOString();
+            const list = JSON.parse(localStorage.getItem(historyKey) || '[]');
+            list.unshift({ t: title, m: tip, at: now });
+            localStorage.setItem(historyKey, JSON.stringify(list.slice(0,10)));
+            if (historyCountEl) historyCountEl.textContent = String(list.length > 10 ? 10 : list.length);
+          } catch {}
+        });
+      }
+      if (reminderBtn) {
+        reminderBtn.addEventListener('click', () => {
+          try {
+            const id = 'wellnessReminder';
+            if (localStorage.getItem(id)) {
+              localStorage.removeItem(id);
+              const disabledMsg = window.languageManager ? window.languageManager.getTranslation('wellness-reminder-disabled') : 'Wellness daily reminder disabled.';
+              showNotification(disabledMsg, 'warning');
+            } else {
+              localStorage.setItem(id, '08:00');
+              const setMsg = window.languageManager ? window.languageManager.getTranslation('wellness-reminder-set') : 'Daily wellness reminder set for 08:00 (local).';
+              showNotification(setMsg, 'success');
+            }
+          } catch (e) {
+            const errorMsg = window.languageManager ? window.languageManager.getTranslation('reminder-settings-error') : 'Unable to save reminder settings on this browser.';
+            showNotification(errorMsg, 'danger');
+          }
+        });
+      }
+      cards.forEach(card => card.addEventListener('click', () => {
+        const expanded = card.getAttribute('aria-expanded') === 'true';
+        card.setAttribute('aria-expanded', String(!expanded));
+      }));
+      document.querySelectorAll('.goal-chip').forEach(chip => {
+        const key = 'pd_goal_' + chip.dataset.goal;
+        try { if (localStorage.getItem(key) === '1') chip.classList.add('completed'); } catch {}
+        chip.addEventListener('click', (e) => {
+          e.stopPropagation();
+          chip.classList.toggle('completed');
+          try { localStorage.setItem(key, chip.classList.contains('completed') ? '1' : '0'); } catch {}
+        });
+      });
+      try {
+        const today = new Date().toISOString().slice(0,10);
+        const last = localStorage.getItem(lastSeenKey);
+        let streak = Number(localStorage.getItem(streakKey) || '0');
+        if (last !== today) {
+          const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+          streak = (last === yesterday) ? streak + 1 : 1;
+          localStorage.setItem(streakKey, String(streak));
+          localStorage.setItem(lastSeenKey, today);
+        }
+        if (streakEl) streakEl.textContent = String(streak);
+      } catch {}
+      // Get quotes from language manager
+      const quotes = window.languageManager ? window.languageManager.getTranslation('wellness-quotes') : [
+        'Small steps add up to big changes.',
+        'Health is a daily habit, not a destination.',
+        'Move your body, calm your mind.',
+        'Drink water, take a breath, keep going.'
+      ];
+      if (quoteEl) { 
+        const randomQuote = Array.isArray(quotes) ? quotes[Math.floor(Math.random()*quotes.length)] : quotes;
+        quoteEl.textContent = '✨ ' + randomQuote; 
+      }
+      const timerEl = document.querySelector('[data-timer]');
+      if (timerEl) {
+        let secs = 30*60;
+        function tick(){
+          const m = String(Math.floor(secs/60)).padStart(2,'0');
+          const s = String(secs%60).padStart(2,'0');
+          timerEl.textContent = `${m}:${s}`;
+          if (secs>0) secs--; else { 
+            secs = 30*60; 
+            const waterMsg = window.languageManager ? window.languageManager.getTranslation('water-reminder') : 'Time to sip some water 💧';
+            showNotification(waterMsg,'info'); 
+          }
+        }
+        tick(); setInterval(tick, 1000);
+      }
+      document.querySelectorAll('[data-poll]').forEach(btn => btn.addEventListener('click', () => {
+        const val = btn.getAttribute('data-poll');
+        try { localStorage.setItem('pd_poll_sleep', val); } catch {}
+        const greatSleepMsg = window.languageManager ? window.languageManager.getTranslation('great-sleep') : 'Great job prioritizing sleep! 😴';
+        const aimSleepMsg = window.languageManager ? window.languageManager.getTranslation('aim-sleep') : 'Aim for 7–9 hours tonight. 🌙';
+        showNotification(val === 'yes' ? greatSleepMsg : aimSleepMsg, 'success');
+      }));
+      
+      // Theme toggle handled globally in assets/js/common.js via [data-toggle-theme]
+    })();
+  </script>
+</body>
+</html>
+
+

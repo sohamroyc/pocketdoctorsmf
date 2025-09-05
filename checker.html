@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pocket Doctor — Symptom Checker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css?v=1.7">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <script src="assets/js/languages.js"></script>
+  <style>
+    /* Professional Dark Mode Styles */
+    .dark {
+      background: linear-gradient(135deg, #0f0f23, #1a1a2e);
+      color: #e0e0e0;
+    }
+    
+    /* Header override only in dark mode (light inherits from global app-pharma) */
+    .app-pharma.dark .qa-header {
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: #f8fafc;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, #3b82f6, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .brand-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .header-meta {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .pill {
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .pill-green {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .pill-pink {
+      background: rgba(236, 72, 153, 0.1);
+      color: #ec4899;
+      border: 1px solid rgba(236, 72, 153, 0.2);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* Professional Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: #10b981;
+      color: white;
+      box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+    }
+
+    .btn-primary:hover {
+      background: #059669;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-primary-gradient {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+    }
+
+    .btn-primary-gradient:hover {
+      background: linear-gradient(135deg, #5a67d8, #6b46c1);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    .dark .btn-outline {
+      background: transparent;
+      color: #f8fafc;
+      border: 1px solid #475569;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    .dark .btn-ghost {
+      background: rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #f8fafc;
+    }
+
+    .btn-accent {
+      background: #ef4444;
+      color: white;
+      box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+    }
+
+    .btn-accent:hover {
+      background: #dc2626;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+    }
+
+    /* Small Circular Floating Action Buttons */
+    .sos-emergency-btn, .chatbot-fab {
+      position: fixed !important;
+      bottom: 1rem !important;
+      right: 1rem !important;
+      z-index: 9999 !important;
+      border: none !important;
+      border-radius: 50% !important;
+      width: 50px !important;
+      height: 50px !important;
+      padding: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-weight: 600 !important;
+      transition: all 0.3s ease !important;
+      cursor: pointer !important;
+      font-size: 1.2rem !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .sos-emergency-btn {
+      bottom: 5rem !important;
+      background: #ef4444 !important;
+      color: white !important;
+    }
+
+    .sos-emergency-btn:hover {
+      background: #dc2626 !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4) !important;
+    }
+
+    .chatbot-fab {
+      background: #10b981 !important;
+      color: white !important;
+    }
+
+    .chatbot-fab:hover {
+      background: #059669 !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4) !important;
+    }
+
+    /* Mobile Responsive for Small FABs */
+    @media (max-width: 768px) {
+      .sos-emergency-btn, .chatbot-fab {
+        bottom: 0.75rem;
+        padding: 0.5rem 0.875rem;
+        font-size: 0.75rem;
+      }
+      
+      .sos-emergency-btn {
+        left: 0.75rem;
+      }
+      
+      .chatbot-fab {
+        right: 0.75rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .sos-emergency-btn, .chatbot-fab {
+        bottom: 0.5rem;
+        padding: 0.4rem 0.75rem;
+        font-size: 0.7rem;
+        gap: 0.25rem;
+      }
+      
+      .sos-emergency-btn {
+        left: 0.5rem;
+      }
+      
+      .chatbot-fab {
+        right: 0.5rem;
+      }
+    }
+
+    .dark .qa-header {
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+    }
+    
+    .dark .checker-hero {
+      background: linear-gradient(135deg, #0f0f23, #1a1a2e);
+    }
+    
+    .dark .card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+    }
+    
+    .dark .form-row label {
+      color: #e0e0e0;
+    }
+    
+    .dark select, .dark input {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #e0e0e0;
+    }
+    
+    .dark select:focus, .dark input:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+    
+    .dark .segmented {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .dark .segmented input:checked + label {
+      background: #4f46e5;
+      color: white;
+    }
+    
+    .dark .tip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #e0e0e0;
+    }
+    
+    .dark .qa-footer {
+      background: rgba(15, 15, 35, 0.95);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .dark .footer-link {
+      color: #b0b0b0;
+    }
+    
+    .dark .footer-link:hover {
+      color: #4f46e5;
+    }
+    
+    /* Light mode footer styles */
+    .qa-footer {
+      background: #1a1a2e !important;
+      color: #e0e0e0 !important;
+    }
+    
+    .qa-footer h4 {
+      color: white !important;
+    }
+    
+    .qa-footer .footer-link {
+      color: #10b981 !important;
+      text-decoration: none !important;
+    }
+    
+    .qa-footer .footer-link:hover {
+      color: #34d399 !important;
+      text-decoration: underline !important;
+    }
+    
+    .qa-footer .footer-bottom {
+      color: white !important;
+    }
+    
+    .qa-footer .footer-bottom div:last-child {
+      color: #b0b0b0 !important;
+    }
+    
+    /* Ensure buttons are visible in light mode */
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: #e0e0e0 !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    }
+    
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.2) !important;
+      color: white !important;
+    }
+    
+    .btn-outline {
+      background: transparent !important;
+      color: #e0e0e0 !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    }
+    
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: white !important;
+    }
+    
+    .btn-primary-gradient {
+      background: linear-gradient(135deg, #667eea, #764ba2) !important;
+      color: white !important;
+      border: none !important;
+    }
+    
+    .btn-primary-gradient:hover {
+      background: linear-gradient(135deg, #5a67d8, #6b46c1) !important;
+    }
+    
+    /* Professional Medical UI Enhancements */
+    .checker-hero {
+      /* Light mode default */
+      background: linear-gradient(135deg, #f6fafc 0%, #eef3f8 100%);
+      color: var(--text);
+      padding: 4rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app-pharma.dark .checker-hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+      color: #f8fafc;
+    }
+
+    .checker-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      opacity: 0.5;
+    }
+    
+    .checker-form {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 2.5rem;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      position: relative;
+      backdrop-filter: blur(10px);
+    }
+    
+    .form-row {
+      margin-bottom: 2rem;
+    }
+    
+    .form-row label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    
+    .form-row select, .form-row input {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      font-size: 1rem;
+      background: var(--panel-2);
+      color: var(--text);
+      transition: all 0.3s ease;
+    }
+    
+    .form-row select:focus, .form-row input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    
+    .form-row select option {
+      background: var(--panel-2);
+      color: var(--text);
+    }
+    
+    .segmented {
+      display: flex;
+      background: var(--panel-2);
+      border-radius: var(--radius-lg);
+      padding: 4px;
+      border: 1px solid var(--border);
+    }
+    
+    .segmented input {
+      display: none;
+    }
+    
+    .segmented label {
+      flex: 1;
+      padding: 1rem;
+      text-align: center;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      margin: 0;
+      color: var(--muted);
+    }
+    
+    .segmented input:checked + label {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow-md);
+    }
+    
+    .duration {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .duration input {
+      flex: 1;
+    }
+    
+    .duration select {
+      flex: 0 0 120px;
+    }
+    
+    .form-row.actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    
+    .btn-lg {
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 12px;
+    }
+    
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    
+    .tip {
+      background: var(--panel);
+      padding: 1.5rem;
+      border-radius: var(--radius-lg);
+      text-align: center;
+      font-weight: 500;
+      box-shadow: var(--shadow-md);
+      transition: all 0.3s ease;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    
+    .tip:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-color);
+    }
+    
+    .text-gradient {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  </style>
+</head>
+<body class="app-pharma">
+  <header class="qa-header">
+    <div class="container header-inner">
+      <div class="header-left">
+        <div class="brand">
+          <a class="brand-link" href="index.html"><span class="logo" aria-hidden="true">🫀</span><span class="brand-name" data-translate="brand-name">Pocket Doctor</span></a>
+        </div>
+        <div class="header-meta">
+          <span class="pill pill-green" data-translate="hipaa-compliant">HIPAA Compliant</span>
+          <span class="pill pill-pink" data-translate="available-24-7">24/7 Available</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a class="btn btn-accent" href="wellness.html" data-translate="wellness">❤ Wellness</a>
+        <button class="btn btn-ghost" data-lang-toggle>🌐 EN</button>
+        <button class="btn btn-ghost" data-toggle-theme>🌙 Theme</button>
+        <a class="btn btn-outline" href="login.html" data-translate="login">🔐 Login</a>
+        <a class="btn btn-primary-gradient" href="register.html" data-translate="register">👤 Register</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section checker-hero">
+      <div class="container">
+        <div style="text-align: center; margin-bottom: 3rem;">
+          <h1 class="text-gradient" style="margin:0 0 1rem; font-size: 3rem; font-weight: 700;" data-translate="symptom-checker-title">Symptom Checker</h1>
+          <p style="margin:0; font-size: 1.2rem; opacity: 0.9;" data-translate="symptom-checker-subtitle">Answer a few quick questions to get a risk indicator and next steps.</p>
+        </div>
+        
+        <form id="checker-form" class="card form checker-form">
+          <div class="form-row">
+            <label for="symptom" data-translate="step-1-symptom">Step 1: Select Symptom</label>
+            <select id="symptom" required>
+              <option value="" disabled selected data-translate="select-symptom">Select...</option>
+              <option value="fever" data-translate="fever">Fever</option>
+              <option value="cough" data-translate="cough">Cough</option>
+              <option value="chest-pain" data-translate="chest-pain">Chest Pain</option>
+              <option value="headache" data-translate="headache">Headache</option>
+              <option value="abdominal-pain" data-translate="abdominal-pain">Abdominal Pain</option>
+              <option value="shortness-breath" data-translate="shortness-breath">Shortness of Breath</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <span class="label" data-translate="step-2-intensity">Step 2: Choose Intensity</span>
+            <div class="segmented" role="group" aria-label="Intensity">
+              <input type="radio" id="intensity-mild" name="intensity" value="mild" required>
+              <label for="intensity-mild" data-translate="mild">Mild</label>
+              <input type="radio" id="intensity-moderate" name="intensity" value="moderate">
+              <label for="intensity-moderate" data-translate="moderate">Moderate</label>
+              <input type="radio" id="intensity-severe" name="intensity" value="severe">
+              <label for="intensity-severe" data-translate="severe">Severe</label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="duration" data-translate="step-3-duration">Step 3: Duration</label>
+            <div class="duration">
+              <input type="number" id="duration" min="0" step="1" placeholder="e.g. 12" required>
+              <select id="duration-unit">
+                <option value="hours" data-translate="hours">hours</option>
+                <option value="days" data-translate="days">days</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row actions">
+            <button type="submit" class="btn btn-primary btn-lg" data-translate="analyze-symptoms">
+              <i class="fas fa-search" style="margin-right: 0.5rem;"></i>
+              Analyze Symptoms
+            </button>
+            <a href="index.html" class="btn btn-outline" data-translate="back">Back</a>
+          </div>
+        </form>
+        
+        <div class="tips-grid">
+          <div class="tip">
+            <i class="fas fa-tint" style="font-size: 1.5rem; margin-bottom: 0.5rem; color: #3b82f6;"></i>
+            <div data-translate="tip-hydration">Stay hydrated if you have fever or cough.</div>
+          </div>
+          <div class="tip">
+            <i class="fas fa-clock" style="font-size: 1.5rem; margin-bottom: 0.5rem; color: #10b981;"></i>
+            <div data-translate="tip-timing">Note when symptoms started and what worsens them.</div>
+          </div>
+          <div class="tip">
+            <i class="fas fa-ambulance" style="font-size: 1.5rem; margin-bottom: 0.5rem; color: #ef4444;"></i>
+            <div data-translate="tip-emergency">Call local emergency for severe chest pain or breathlessness.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="qa-footer" style="background: #1a1a2e; color: #e0e0e0; padding: 3rem 0 1rem; margin-top: 4rem;">
+    <div class="container footer-inner" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+      <div class="footer-col">
+        <h4 style="color: white; font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;" data-translate="brand-name">Pocket Doctor</h4>
+        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+          <a class="footer-link" href="index.html" data-translate="home" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Home</a>
+          <a class="footer-link" href="index.html#about" data-translate="about" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">About</a>
+          <a class="footer-link" href="checker.html" data-translate="symptom-checker" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Symptom Checker</a>
+          <a class="footer-link" href="wellness.html" data-translate="wellness" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">❤️ Wellness</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 style="color: white; font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;" data-translate="indian-healthcare">Indian Healthcare</h4>
+        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+          <a class="footer-link" href="https://www.mohfw.gov.in/" target="_blank" rel="noopener" data-translate="mohfw" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Ministry of Health (MoHFW)</a>
+          <a class="footer-link" href="https://www.nhp.gov.in/" target="_blank" rel="noopener" data-translate="nhp" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">National Health Portal (NHP)</a>
+          <a class="footer-link" href="https://www.ayushmanbharat.gov.in/" target="_blank" rel="noopener" data-translate="ayushman-bharat" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Ayushman Bharat</a>
+          <a class="footer-link" href="https://www.icmr.gov.in/" target="_blank" rel="noopener" data-translate="icmr" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">ICMR</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 style="color: white; font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;" data-translate="emergency">Emergency</h4>
+        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+          <a class="footer-link" href="tel:112" data-translate="dial-112" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Dial 112 (Emergency)</a>
+          <a class="footer-link" href="tel:108" data-translate="dial-108" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Dial 108 (Ambulance)</a>
+          <a class="footer-link" href="https://www.nhp.gov.in/ambulance_service_ms" target="_blank" rel="noopener" data-translate="ambulance-services" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Ambulance Services</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 style="color: white; font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;" data-translate="legal-info">Legal & Info</h4>
+        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+          <a class="footer-link" href="#" data-translate="privacy" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Privacy Policy</a>
+          <a class="footer-link" href="#" data-translate="terms" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Terms of Service</a>
+          <a class="footer-link" href="#" data-translate="disclaimers" style="color: #10b981; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease;">Disclaimers</a>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-bottom" style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1.5rem; text-align: center;">
+      <div style="color: white; font-size: 0.9rem; margin-bottom: 0.5rem;">© <span id="year"></span> <span data-translate="brand-name">Pocket Doctor</span></div>
+      <div style="color: #b0b0b0; font-size: 0.85rem;" data-translate="medical-disclaimer">Not a substitute for professional medical advice.</div>
+    </div>
+  </footer>
+
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/checker.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // Theme handled globally via assets/js/common.js
+  </script>
+
+  <!-- Small Circular Floating Action Buttons -->
+
+  <button id="chatbot-fab" class="chatbot-fab" onclick="window.location.href='index.html#chatbot'" title="AI Health">
+    🩺
+  </button>
+</body>
+</html>
+
+
