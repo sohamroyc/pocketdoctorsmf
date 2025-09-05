@@ -17,7 +17,12 @@ app.use(express.json());
 // Static files
 app.use(express.static(__dirname));
 
-const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyACTn4Bu6WEiorcSvMRz-XdMEost1wVWHU';
+// Serve index.html for root route
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+const apiKey = process.env.GEMINI_API_KEY;
 
 function sanitizeToShortPlainText(input) {
   if (!input) return '';

@@ -71,9 +71,19 @@ Tips
   - Borders: `var(--border)`
 - The theme toggle stores `theme` in localStorage. Delete that key if the theme gets stuck.
 
+Deploy to Vercel (Free)
+1) Push your code to GitHub
+2) Go to [vercel.com](https://vercel.com) and import your GitHub repo
+3) Add environment variables in Vercel dashboard:
+   - `GEMINI_API_KEY` = your Google AI Studio API key
+4) Deploy! Vercel will auto-detect it's a Node.js app
+
+Your app will be live at `https://your-project.vercel.app`
+
 Security
 - Do not expose your API key in any client code. Keep it in `.env`.
 - The server proxies requests to Google, so keys stay private.
+- Never commit `.env` files to Git.
 
 License
 - For learning and personal use. Review dependencies for their own licenses.
