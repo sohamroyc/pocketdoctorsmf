@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # 🏥 Pocket Doctor
 
 <div align="center">
