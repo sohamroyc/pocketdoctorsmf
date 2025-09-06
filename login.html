@@ -191,8 +191,23 @@
             
             setTimeout(() => {
                 showNotification('Login successful! Redirecting...', 'success');
+                // Set login status
+                localStorage.setItem('isLoggedIn', 'true');
+                // Store basic user data
+                const userData = {
+                    fullName: 'John Doe',
+                    email: email,
+                    phone: '+1 (555) 123-4567',
+                    dateOfBirth: '1990-01-15',
+                    gender: 'male',
+                    bloodType: 'B+',
+                    allergies: 'Penicillin, Shellfish',
+                    medicalConditions: 'Type 2 Diabetes, Hypertension',
+                    emergencyContact: 'Jane Doe - +1 (555) 987-6543'
+                };
+                localStorage.setItem('userData', JSON.stringify(userData));
                 setTimeout(() => {
-                    window.location.href = 'index.html';
+                    window.location.href = 'profile.html';
                 }, 1500);
             }, 1000);
         });

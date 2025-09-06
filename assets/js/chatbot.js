@@ -41,7 +41,7 @@
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Request failed');
-      addMsg(String(data.reply || '')), false;
+      addMsg(String(data.reply || ''), false);
     } catch (e) {
       addMsg('Sorry, I could not reach the assistant right now.', false);
     }

@@ -40,7 +40,27 @@
     return map[risk];
   }
 
-  function render() {
+  async function getAIAnalysis(symptom, intensity, duration, unit) {
+    try {
+      const symptomText = `${symptom} (${intensity} intensity, ${duration} ${unit})`;
+      const response = await fetch('/api/analyze-symptoms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ symptoms: symptomText })
+      });
+      
+      if (!response.ok) {
+        throw new Error('AI analysis failed');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('AI analysis error:', error);
+      return null;
+    }
+  }
+
+  async function render() {
     const { symptom, intensity, duration, unit } = getParams();
     if (!symptom || !intensity || !duration) {
       window.location.replace('checker.html');
@@ -51,15 +71,50 @@
     qs('#res-intensity').textContent = intensity;
     qs('#res-duration').textContent = `${duration} ${unit}`;
 
-    const risk = computeRisk(intensity, duration, unit);
+    // Show loading state
     const badge = qs('#risk-badge');
-    badge.textContent = risk.toUpperCase();
-    badge.classList.remove('risk-green', 'risk-yellow', 'risk-red');
-    badge.classList.add(`risk-${risk}`);
+    const suggestionIcon = qs('#suggestion-icon');
+    const suggestionText = qs('#suggestion-text');
+    
+    badge.textContent = 'ANALYZING...';
+    badge.className = 'risk-badge risk-yellow';
+    suggestionIcon.textContent = '⏳';
+    suggestionText.textContent = 'AI is analyzing your symptoms...';
 
-    const s = getSuggestion(risk, symptom);
-    qs('#suggestion-icon').textContent = s.icon;
-    qs('#suggestion-text').textContent = s.text;
+    // Try to get AI analysis
+    const aiAnalysis = await getAIAnalysis(symptom, intensity, duration, unit);
+    
+    if (aiAnalysis) {
+      // Use AI analysis
+      badge.textContent = aiAnalysis.riskLevel.toUpperCase();
+      badge.className = 'risk-badge';
+      badge.classList.add(`risk-${aiAnalysis.riskLevel === 'low' ? 'green' : aiAnalysis.riskLevel === 'moderate' ? 'yellow' : 'red'}`);
+      
+      suggestionIcon.textContent = aiAnalysis.riskLevel === 'low' ? '✅' : aiAnalysis.riskLevel === 'moderate' ? '⚠️' : '🚨';
+      suggestionText.textContent = aiAnalysis.analysis;
+      
+      // Update recommendations if element exists
+      const recommendationsEl = qs('#recommendations');
+      if (recommendationsEl && aiAnalysis.recommendations) {
+        recommendationsEl.innerHTML = aiAnalysis.recommendations.map(rec => `<li>${rec}</li>`).join('');
+      }
+      
+      // Update medical help if element exists
+      const medicalHelpEl = qs('#medical-help');
+      if (medicalHelpEl && aiAnalysis.medicalHelp) {
+        medicalHelpEl.textContent = aiAnalysis.medicalHelp;
+      }
+    } else {
+      // Fallback to basic risk calculation
+      const risk = computeRisk(intensity, duration, unit);
+      badge.textContent = risk.toUpperCase();
+      badge.classList.remove('risk-green', 'risk-yellow', 'risk-red');
+      badge.classList.add(`risk-${risk}`);
+
+      const s = getSuggestion(risk, symptom);
+      suggestionIcon.textContent = s.icon;
+      suggestionText.textContent = s.text;
+    }
 
     qs('#find-help').addEventListener('click', function(e) {
       e.preventDefault();

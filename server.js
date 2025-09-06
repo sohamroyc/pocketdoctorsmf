@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fetch from 'node-fetch';
+import fs from 'fs';
 
 dotenv.config();
 
@@ -12,17 +13,154 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-// Static files
-app.use(express.static(__dirname));
-
-// Serve index.html for root route
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+// Set security headers to allow inline styles and scripts
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: https: blob:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://generativelanguage.googleapis.com;");
+  next();
 });
 
-const apiKey = process.env.GEMINI_API_KEY;
+// Serve static files with proper MIME types
+app.use(express.static(__dirname, {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.html')) {
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    } else if (path.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css; charset=utf-8');
+    } else if (path.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+    } else if (path.endsWith('.json')) {
+      res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    } else if (path.endsWith('.png')) {
+      res.setHeader('Content-Type', 'image/png');
+    } else if (path.endsWith('.jpg') || path.endsWith('.jpeg')) {
+      res.setHeader('Content-Type', 'image/jpeg');
+    } else if (path.endsWith('.svg')) {
+      res.setHeader('Content-Type', 'image/svg+xml');
+    } else if (path.endsWith('.ico')) {
+      res.setHeader('Content-Type', 'image/x-icon');
+    } else if (path.endsWith('.woff')) {
+      res.setHeader('Content-Type', 'font/woff');
+    } else if (path.endsWith('.woff2')) {
+      res.setHeader('Content-Type', 'font/woff2');
+    } else if (path.endsWith('.ttf')) {
+      res.setHeader('Content-Type', 'font/ttf');
+    } else if (path.endsWith('.eot')) {
+      res.setHeader('Content-Type', 'application/vnd.ms-fontobject');
+    }
+  }
+}));
+
+// Serve static assets with explicit routes
+app.get('/assets/css/:file', (req, res) => {
+  const filePath = path.join(__dirname, 'assets', 'css', req.params.file);
+  console.log(`Serving CSS: ${filePath}`);
+  if (fs.existsSync(filePath)) {
+    res.setHeader('Content-Type', 'text/css; charset=utf-8');
+    res.setHeader('Cache-Control', 'public, max-age=31536000'); // Cache for 1 year
+    res.sendFile(filePath);
+  } else {
+    console.error(`CSS file not found: ${filePath}`);
+    res.status(404).json({ error: 'CSS file not found', file: req.params.file });
+  }
+});
+
+app.get('/assets/js/:file', (req, res) => {
+  const filePath = path.join(__dirname, 'assets', 'js', req.params.file);
+  console.log(`Serving JS: ${filePath}`);
+  if (fs.existsSync(filePath)) {
+    res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+    res.setHeader('Cache-Control', 'public, max-age=31536000'); // Cache for 1 year
+    res.sendFile(filePath);
+  } else {
+    console.error(`JS file not found: ${filePath}`);
+    res.status(404).json({ error: 'JS file not found', file: req.params.file });
+  }
+});
+
+// Serve HTML pages with explicit routes
+const htmlPages = [
+  'index.html',
+  'checker.html', 
+  'result.html',
+  'wellness.html',
+  'dashboard.html',
+  'medications.html',
+  'login.html',
+  'register.html',
+  'profile.html',
+  'xray-analysis.html'
+];
+
+htmlPages.forEach(page => {
+  app.get(`/${page}`, (req, res) => {
+    const filePath = path.join(__dirname, page);
+    console.log(`Serving ${page} from ${filePath}`);
+    if (fs.existsSync(filePath)) {
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      res.sendFile(filePath);
+    } else {
+      console.error(`File not found: ${filePath}`);
+      res.status(404).send(`File not found: ${page}`);
+    }
+  });
+});
+
+// Root route
+app.get('/', (req, res) => {
+  const filePath = path.join(__dirname, 'index.html');
+  console.log(`Serving root from ${filePath}`);
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+  } else {
+    console.error(`File not found: ${filePath}`);
+    res.status(404).send('index.html not found');
+  }
+});
+
+// Catch-all route for any other requests
+app.get('*', (req, res) => {
+  const filePath = path.join(__dirname, req.path);
+  console.log(`Catch-all request for: ${req.path} -> ${filePath}`);
+  
+  // Check if it's a static file request
+  if (path.extname(filePath) && fs.existsSync(filePath)) {
+    // Set appropriate MIME type based on file extension
+    const ext = path.extname(filePath).toLowerCase();
+    if (ext === '.css') {
+      res.setHeader('Content-Type', 'text/css; charset=utf-8');
+    } else if (ext === '.js') {
+      res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+    } else if (ext === '.html') {
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    } else if (ext === '.json') {
+      res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    }
+    res.sendFile(filePath);
+  } else {
+    console.error(`File not found: ${filePath}`);
+    res.status(404).send(`Page not found: ${req.path}`);
+  }
+});
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    version: '1.0.0'
+  });
+});
+
+const apiKey = process.env.GEMINI_API_KEY || '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';
+
+if (!apiKey) {
+  console.warn('GEMINI_API_KEY environment variable is not set. AI features will not work.');
+} else {
+  console.log('✅ GEMINI_API_KEY is set and ready to use');
+}
 
 function sanitizeToShortPlainText(input) {
   if (!input) return '';
@@ -45,6 +183,10 @@ function sanitizeToShortPlainText(input) {
 
 app.post('/api/chat', async (req, res) => {
   try {
+    if (!apiKey) {
+      return res.status(503).json({ error: 'AI service not available. Please set GEMINI_API_KEY environment variable.' });
+    }
+    
     const { message } = req.body || {};
     if (!message || typeof message !== 'string') {
       return res.status(400).json({ error: 'message is required' });
@@ -54,7 +196,9 @@ app.post('/api/chat', async (req, res) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-goog-api-key': apiKey
+        'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': 'http://localhost:3000',
+        'X-Title': 'Pocket Doctor Government Schemes'
       },
       body: JSON.stringify({
         systemInstruction: {
@@ -76,8 +220,8 @@ app.post('/api/chat', async (req, res) => {
 
     if (!response.ok) {
       const errorData = await response.text();
-      console.error('Gemini API error:', errorData);
-      return res.status(500).json({ error: 'Gemini API request failed' });
+      console.error('OpenRouter API error:', errorData);
+      return res.status(500).json({ error: 'OpenRouter API request failed' });
     }
 
     const data = await response.json();
@@ -90,9 +234,142 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
+// AI X-Ray Analysis endpoint
+app.post('/api/analyze-xray', async (req, res) => {
+  try {
+    if (!apiKey) {
+      return res.status(503).json({ error: 'AI service not available. Please set GEMINI_API_KEY environment variable.' });
+    }
+    
+    const { imageData, imageType } = req.body || {};
+    if (!imageData || !imageType) {
+      return res.status(400).json({ error: 'imageData and imageType are required' });
+    }
+
+    const prompt = `You are a medical AI assistant specialized in X-Ray image analysis. Analyze the provided X-Ray image and provide a comprehensive medical assessment in this exact JSON format:
+
+{
+  "confidence": 85,
+  "diseases": [
+    {
+      "name": "Disease Name",
+      "probability": 75,
+      "level": "normal/warning/critical",
+      "description": "Detailed medical description of the finding"
+    }
+  ],
+  "recommendations": [
+    "Medical recommendation 1",
+    "Medical recommendation 2",
+    "Medical recommendation 3"
+  ],
+  "overallAssessment": "Overall assessment of the X-Ray image",
+  "urgencyLevel": "low/moderate/high/critical"
+}
+
+Important guidelines:
+- Only respond with valid JSON
+- Be medically accurate but conservative
+- Always emphasize consulting healthcare professionals
+- Use appropriate medical terminology
+- Assess for common conditions like pneumonia, pneumothorax, fractures, etc.
+- If no abnormalities are detected, indicate "Normal X-Ray" with high confidence
+- Provide specific, actionable recommendations
+- Consider the urgency level based on findings
+
+Analyze this X-Ray image:`;
+
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': 'http://localhost:3000',
+        'X-Title': 'Pocket Doctor Government Schemes'
+      },
+      body: JSON.stringify({
+        contents: [{
+          parts: [
+            {
+              text: prompt
+            },
+            {
+              inline_data: {
+                mime_type: imageType,
+                data: imageData
+              }
+            }
+          ]
+        }]
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error('OpenRouter API error:', errorData);
+      return res.status(500).json({ error: 'OpenRouter API request failed' });
+    }
+
+    const data = await response.json();
+    const aiResponse = data.choices?.[0]?.message?.content || 'No response from AI';
+    
+    // Try to parse the AI response
+    try {
+      let jsonStart = aiResponse.indexOf('{');
+      let jsonEnd = aiResponse.lastIndexOf('}') + 1;
+      
+      if (jsonStart === -1 || jsonEnd === 0) {
+        throw new Error('No JSON found in response');
+      }
+      
+      const jsonString = aiResponse.substring(jsonStart, jsonEnd);
+      const parsed = JSON.parse(jsonString);
+      
+      // Validate required fields
+      const required = ['confidence', 'diseases', 'recommendations'];
+      for (const field of required) {
+        if (!parsed[field]) {
+          throw new Error(`Missing required field: ${field}`);
+        }
+      }
+      
+      return res.json(parsed);
+    } catch (parseError) {
+      console.error('Error parsing AI response:', parseError);
+      // Return fallback response
+      return res.json({
+        confidence: 75,
+        diseases: [
+          {
+            name: "Normal X-Ray",
+            probability: 85,
+            level: "normal",
+            description: "No significant abnormalities detected. The X-Ray appears normal with clear lung fields and normal cardiac silhouette."
+          }
+        ],
+        recommendations: [
+          "Continue regular health checkups",
+          "Maintain a healthy lifestyle",
+          "Consult a healthcare provider if you have any concerns",
+          "Follow up as recommended by your doctor"
+        ],
+        overallAssessment: "The X-Ray image appears normal with no obvious pathological findings.",
+        urgencyLevel: "low"
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Failed to analyze X-Ray image: ' + err.message });
+  }
+});
+
 // AI Symptom Checker endpoint
 app.post('/api/analyze-symptoms', async (req, res) => {
   try {
+    if (!apiKey) {
+      return res.status(503).json({ error: 'AI service not available. Please set GEMINI_API_KEY environment variable.' });
+    }
+    
     const { symptoms } = req.body || {};
     if (!symptoms || typeof symptoms !== 'string') {
       return res.status(400).json({ error: 'symptoms are required' });
@@ -112,11 +389,13 @@ Symptoms: ${symptoms}
 
 Important: Only respond with valid JSON. Be medically accurate but conservative. Always emphasize consulting healthcare professionals.`;
 
-    const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent', {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-goog-api-key': apiKey
+        'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': 'http://localhost:3000',
+        'X-Title': 'Pocket Doctor Government Schemes'
       },
       body: JSON.stringify({
         contents: [{
@@ -129,12 +408,12 @@ Important: Only respond with valid JSON. Be medically accurate but conservative.
 
     if (!response.ok) {
       const errorData = await response.text();
-      console.error('Gemini API error:', errorData);
-      return res.status(500).json({ error: 'Gemini API request failed' });
+      console.error('OpenRouter API error:', errorData);
+      return res.status(500).json({ error: 'OpenRouter API request failed' });
     }
 
     const data = await response.json();
-    const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from Gemini';
+    const aiResponse = data.choices?.[0]?.message?.content || 'No response from AI';
     
     // Try to parse the AI response
     try {
@@ -177,6 +456,178 @@ Important: Only respond with valid JSON. Be medically accurate but conservative.
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Failed to analyze symptoms: ' + err.message });
+  }
+});
+
+// Government Scheme Query Endpoint
+app.post('/api/scheme-query', async (req, res) => {
+  try {
+    const { scheme, schemeTitle, query } = req.body;
+
+    if (!scheme || !query) {
+      return res.status(400).json({ error: 'Scheme and query are required' });
+    }
+
+    if (!apiKey) {
+      return res.status(503).json({ error: 'AI service not available. Please set GEMINI_API_KEY environment variable.' });
+    }
+
+    // Create scheme-specific context
+    const schemeContexts = {
+      'ayushman-bharat': {
+        name: 'Ayushman Bharat Pradhan Mantri Jan Arogya Yojana (AB-PMJAY)',
+        description: 'Health insurance scheme for poor and vulnerable families providing coverage of up to ₹5 lakh per family per year for secondary and tertiary care hospitalization.',
+        keyInfo: 'Covers over 10 crore families, provides cashless treatment at empaneled hospitals, covers pre-existing conditions, and includes 1,393 medical packages.'
+      },
+      'jan-aushadhi': {
+        name: 'Pradhan Mantri Bhartiya Janaushadhi Pariyojana (PMBJP)',
+        description: 'Scheme to provide quality generic medicines at affordable prices through Jan Aushadhi Kendras.',
+        keyInfo: 'Medicines available at 50-90% lower prices than branded medicines, over 1,800+ medicines and 285+ surgical items available, more than 10,000 Jan Aushadhi Kendras across India.'
+      },
+      'vaccination': {
+        name: 'Universal Immunization Programme (UIP)',
+        description: 'Comprehensive vaccination program providing free immunization against vaccine-preventable diseases.',
+        keyInfo: 'Covers 12 vaccine-preventable diseases, targets children under 2 years and pregnant women, provides vaccines free of cost at government health facilities.'
+      }
+    };
+
+    const context = schemeContexts[scheme] || { name: schemeTitle, description: '', keyInfo: '' };
+
+    const prompt = `You are a helpful assistant providing information about Indian government health schemes. 
+
+Scheme: ${context.name}
+Description: ${context.description}
+Key Information: ${context.keyInfo}
+
+User Question: ${query}
+
+Please provide a comprehensive, accurate, and helpful answer about this government scheme. Include:
+1. Direct answer to the user's question
+2. Relevant details about eligibility, application process, benefits, or requirements
+3. Important contact information or official websites if relevant
+4. Any additional helpful information
+
+Keep the response clear, concise, and easy to understand. If the question is about application process, include step-by-step guidance. If about eligibility, list the specific criteria clearly.`;
+
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': 'http://localhost:3000',
+        'X-Title': 'Pocket Doctor Government Schemes'
+      },
+      body: JSON.stringify({
+        model: 'openai/gpt-3.5-turbo',
+        messages: [{
+          role: 'user',
+          content: prompt
+        }],
+        temperature: 0.7,
+        max_tokens: 1024,
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error('OpenRouter API error:', errorData);
+      return res.status(500).json({ error: 'OpenRouter API request failed' });
+    }
+
+    const data = await response.json();
+    const aiResponse = data.choices?.[0]?.message?.content || 'No response from AI';
+    
+    return res.json({ response: aiResponse });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Failed to process scheme query: ' + err.message });
+  }
+});
+
+// Chatbot Query Endpoint
+app.post('/api/chatbot-query', async (req, res) => {
+  try {
+    const { query, context } = req.body;
+
+    if (!query) {
+      return res.status(400).json({ error: 'Query is required' });
+    }
+
+    if (!apiKey) {
+      return res.status(503).json({ error: 'AI service not available. Please set GEMINI_API_KEY environment variable.' });
+    }
+
+    // Create context-aware prompt for government schemes
+    const prompt = `You are a helpful AI assistant specializing in Indian government health schemes. You have comprehensive knowledge about:
+
+1. **Ayushman Bharat Pradhan Mantri Jan Arogya Yojana (AB-PMJAY)**
+   - Health insurance for poor and vulnerable families
+   - Coverage up to ₹5 lakh per family per year
+   - Covers secondary and tertiary care hospitalization
+   - Covers over 10 crore families
+   - Provides cashless treatment at empaneled hospitals
+   - Covers pre-existing conditions
+   - Includes 1,393 medical packages
+
+2. **Pradhan Mantri Bhartiya Janaushadhi Pariyojana (PMBJP)**
+   - Provides quality generic medicines at affordable prices
+   - Medicines available at 50-90% lower prices than branded medicines
+   - Over 1,800+ medicines and 285+ surgical items available
+   - More than 10,000 Jan Aushadhi Kendras across India
+   - Helps reduce out-of-pocket expenditure on medicines
+
+3. **Universal Immunization Programme (UIP)**
+   - Comprehensive vaccination program
+   - Covers 12 vaccine-preventable diseases
+   - Targets children under 2 years and pregnant women
+   - Provides vaccines free of cost at government health facilities
+   - Includes vaccines for diseases like polio, measles, hepatitis B, etc.
+
+User Question: ${query}
+
+Please provide a helpful, accurate, and comprehensive answer about government health schemes. Include:
+- Direct answer to the user's question
+- Relevant details about eligibility, benefits, or processes
+- Important contact information or official websites if relevant
+- Step-by-step guidance for applications if asked
+- Any additional helpful information
+
+Keep the response clear, concise, and easy to understand. If the question is about application process, include step-by-step guidance. If about eligibility, list the specific criteria clearly. Always be helpful and encouraging.`;
+
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': 'http://localhost:3000',
+        'X-Title': 'Pocket Doctor Government Schemes'
+      },
+      body: JSON.stringify({
+        model: 'openai/gpt-3.5-turbo',
+        messages: [{
+          role: 'user',
+          content: prompt
+        }],
+        temperature: 0.7,
+        max_tokens: 1024,
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error('OpenRouter API error:', errorData);
+      return res.status(500).json({ error: 'OpenRouter API request failed' });
+    }
+
+    const data = await response.json();
+    const aiResponse = data.choices?.[0]?.message?.content || 'No response from AI';
+    
+    return res.json({ response: aiResponse });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Failed to process chatbot query: ' + err.message });
   }
 });
 

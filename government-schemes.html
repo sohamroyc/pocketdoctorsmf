@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Government Schemes — Pocket Doctor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css?v=2.1">
+  <meta name="description" content="Government Health Schemes - Get information about Ayushman Bharat, Jan Aushadhi, and Vaccination programs">
+  <script src="assets/js/languages.js"></script>
+  <style>
+    /* Professional UI Enhancements - Matching index.html */
+    :root {
+      --primary-color: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary-color: #10b981;
+      --accent-color: #f59e0b;
+      --danger-color: #ef4444;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --info-color: #3b82f6;
+      --dark-bg: #0f172a;
+      --dark-surface: #1e293b;
+      --dark-card: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border-color: #475569;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+    }
+
+    /* Override CSS variables to match index.html */
+    :root {
+      --primary: var(--primary-color);
+      --primary-dark: var(--primary-dark);
+      --secondary: var(--secondary-color);
+      --accent: var(--accent-color);
+      --danger: var(--danger-color);
+      --success: var(--success-color);
+      --warning: var(--warning-color);
+      --info: var(--info-color);
+      --bg: var(--dark-bg);
+      --panel-1: var(--dark-surface);
+      --panel-2: var(--dark-card);
+      --text: var(--text-primary);
+      --text-muted: var(--text-muted);
+      --border: var(--border-color);
+    }
+    /* Enhanced Scheme Item Hover Effects */
+    .scheme-item:hover {
+      border-color: var(--primary) !important;
+      background: var(--panel-1) !important;
+      transform: translateY(-4px) !important;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15) !important;
+    }
+    
+    .scheme-btn:hover {
+      background: var(--primary-dark, #0056b3) !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3) !important;
+    }
+    
+    .scheme-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+    }
+
+    .scheme-modal-content {
+      background: var(--panel-1);
+      border-radius: 16px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+    }
+
+    .scheme-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .scheme-modal-header h3 {
+      margin: 0;
+      color: var(--text);
+      font-size: 1.3rem;
+    }
+
+    .scheme-modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .scheme-modal-close:hover {
+      background: var(--panel-2);
+      color: var(--text);
+    }
+
+    .scheme-modal-body {
+      padding: 24px;
+    }
+
+    .scheme-query-input {
+      margin-top: 16px;
+    }
+
+    .scheme-query-input textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel-2);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      resize: vertical;
+      min-height: 80px;
+      margin-bottom: 12px;
+    }
+
+    .scheme-query-input textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .scheme-response {
+      background: var(--panel-2);
+      border-radius: 12px;
+      padding: 20px;
+      border-left: 4px solid var(--primary);
+    }
+
+    .scheme-response h4 {
+      margin: 0 0 12px 0;
+      color: var(--text);
+      font-size: 1.1rem;
+    }
+
+    .scheme-answer {
+      color: var(--text);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top: 3px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .scheme-modal-content {
+        width: 95%;
+        margin: 20px;
+      }
+      
+      .scheme-modal-header,
+      .scheme-modal-body {
+        padding: 16px;
+      }
+    }
+
+    /* Page-specific styles */
+    .schemes-page-header {
+      text-align: center;
+      padding: 3rem 0 2rem;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+    }
+
+    .schemes-page-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #007bff, #20c997);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .schemes-page-header p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .back-to-home {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .back-to-home:hover {
+      background: var(--primary-dark, #0056b3);
+      transform: translateY(-2px);
+    }
+
+    /* Chatbot Styles */
+    .chatbot-container {
+      background: var(--panel-2);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chatbot-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .chat-message {
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      word-wrap: break-word;
+    }
+
+    .bot-message {
+      background: var(--panel-1);
+      border: 1px solid var(--border);
+      align-self: flex-start;
+    }
+
+    .user-message {
+      background: var(--primary);
+      color: white;
+      align-self: flex-end;
+    }
+
+    .message-content {
+      line-height: 1.5;
+    }
+
+    .chatbot-input {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+      background: var(--panel-1);
+    }
+
+    .input-group {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+    }
+
+    .input-group textarea {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel-2);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      resize: none;
+      min-height: 44px;
+      max-height: 120px;
+    }
+
+    .input-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .input-group button {
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .input-group button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .typing-dots {
+      display: flex;
+      gap: 4px;
+    }
+
+    .typing-dots span {
+      width: 6px;
+      height: 6px;
+      background: var(--text-muted);
+      border-radius: 50%;
+      animation: typing 1.4s infinite ease-in-out;
+    }
+
+    .typing-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes typing {
+      0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.4;
+      }
+      30% {
+        transform: translateY(-10px);
+        opacity: 1;
+      }
+    }
+
+    /* Enhanced Professional Styles */
+    .scheme-card:hover {
+      transform: translateY(-8px) scale(1.02) !important;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .scheme-btn:hover {
+      background: rgba(255,255,255,0.3) !important;
+      border-color: rgba(255,255,255,0.5) !important;
+      transform: translateY(-2px) !important;
+    }
+
+    /* Professional Page Header - Matching index.html */
+    .schemes-page-header {
+      background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-surface) 30%, var(--dark-card) 70%, var(--border-color) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .schemes-page-header h1 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .schemes-page-header p {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-muted);
+    }
+
+    /* Enhanced Chatbot Design - Matching index.html */
+    .chatbot-section {
+      background: var(--panel-1);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .chatbot-container {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+    }
+
+    /* Professional Button Styles - Matching index.html */
+    .back-to-home {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      font-family: 'Inter', sans-serif;
+      box-shadow: var(--shadow-md);
+    }
+
+    .back-to-home:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+  </style>
+</head>
+<body>
+  <!-- Back to Home Button -->
+  <button class="back-to-home" onclick="window.location.href='index.html'">
+    ← Back to Home
+  </button>
+
+  <!-- Page Header -->
+  <section class="schemes-page-header">
+    <div class="container">
+      <h1>🏛️ Government Health Schemes</h1>
+      <p>Get detailed information about government health schemes and ask questions to our AI assistant for personalized guidance.</p>
+    </div>
+  </section>
+
+  <!-- Government Schemes Section -->
+  <section class="section">
+    <div class="container">
+      <div class="card government-schemes-card" style="min-height: 500px; padding: 32px;">
+        <h2 style="margin-top:0;display:flex;align-items:center;gap:10px; font-size: 2rem; margin-bottom: 1rem;">
+          <span>🏛️</span> 
+          <span data-translate="free-government-schemes">Free Government Schemes</span>
+        </h2>
+        <p class="muted" style="font-size: 1.1rem; margin-bottom: 2rem;" data-translate="schemes-description">
+          Check eligibility for free medicines and health schemes. Click on any scheme to ask questions and get AI-powered guidance.
+        </p>
+        
+        <div class="schemes-grid" style="display: grid !important; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important; gap: 24px !important; margin-top: 20px !important;">
+          <!-- Ayushman Bharat Card -->
+          <div class="scheme-card" data-scheme="ayushman-bharat" style="background: var(--panel-2) !important; border: 1px solid var(--border) !important; border-radius: var(--radius-lg) !important; padding: 32px 24px !important; text-align: center !important; transition: all 0.3s ease !important; position: relative !important; overflow: hidden !important; min-height: 280px !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; cursor: pointer !important; box-shadow: var(--shadow-lg) !important;">
+            <div class="scheme-icon" style="font-size: 3.5rem !important; margin-bottom: 16px !important; display: block !important; color: var(--primary) !important;">🏥</div>
+            <div class="scheme-title" style="font-size: 1.5rem !important; font-weight: 700 !important; color: var(--text) !important; margin-bottom: 12px !important; font-family: 'Inter', sans-serif !important;">Ayushman Bharat</div>
+            <div class="scheme-description" style="font-size: 1rem !important; color: var(--text-muted) !important; line-height: 1.5 !important; margin-bottom: 20px !important; flex-grow: 1 !important; font-family: 'Inter', sans-serif !important;">Health insurance for poor and vulnerable families providing coverage of up to ₹5 lakh per family per year for secondary and tertiary care</div>
+            <button class="scheme-btn" style="background: var(--primary) !important; color: white !important; border: none !important; border-radius: var(--radius-md) !important; padding: 12px 24px !important; font-size: 1rem !important; font-weight: 600 !important; cursor: pointer !important; transition: all 0.3s ease !important; width: 100% !important; font-family: 'Inter', sans-serif !important;">Ask Questions</button>
+          </div>
+          
+          <!-- Jan Aushadhi Card -->
+          <div class="scheme-card" data-scheme="jan-aushadhi" style="background: var(--panel-2) !important; border: 1px solid var(--border) !important; border-radius: var(--radius-lg) !important; padding: 32px 24px !important; text-align: center !important; transition: all 0.3s ease !important; position: relative !important; overflow: hidden !important; min-height: 280px !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; cursor: pointer !important; box-shadow: var(--shadow-lg) !important;">
+            <div class="scheme-icon" style="font-size: 3.5rem !important; margin-bottom: 16px !important; display: block !important; color: var(--secondary) !important;">💊</div>
+            <div class="scheme-title" style="font-size: 1.5rem !important; font-weight: 700 !important; color: var(--text) !important; margin-bottom: 12px !important; font-family: 'Inter', sans-serif !important;">Jan Aushadhi</div>
+            <div class="scheme-description" style="font-size: 1rem !important; color: var(--text-muted) !important; line-height: 1.5 !important; margin-bottom: 20px !important; flex-grow: 1 !important; font-family: 'Inter', sans-serif !important;">Affordable generic medicines available at 50-90% lower prices than branded medicines through 10,000+ Jan Aushadhi Kendras</div>
+            <button class="scheme-btn" style="background: var(--secondary) !important; color: white !important; border: none !important; border-radius: var(--radius-md) !important; padding: 12px 24px !important; font-size: 1rem !important; font-weight: 600 !important; cursor: pointer !important; transition: all 0.3s ease !important; width: 100% !important; font-family: 'Inter', sans-serif !important;">Ask Questions</button>
+          </div>
+          
+          <!-- Vaccination Card -->
+          <div class="scheme-card" data-scheme="vaccination" style="background: var(--panel-2) !important; border: 1px solid var(--border) !important; border-radius: var(--radius-lg) !important; padding: 32px 24px !important; text-align: center !important; transition: all 0.3s ease !important; position: relative !important; overflow: hidden !important; min-height: 280px !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; cursor: pointer !important; box-shadow: var(--shadow-lg) !important;">
+            <div class="scheme-icon" style="font-size: 3.5rem !important; margin-bottom: 16px !important; display: block !important; color: var(--info) !important;">💉</div>
+            <div class="scheme-title" style="font-size: 1.5rem !important; font-weight: 700 !important; color: var(--text) !important; margin-bottom: 12px !important; font-family: 'Inter', sans-serif !important;">Vaccination</div>
+            <div class="scheme-description" style="font-size: 1rem !important; color: var(--text-muted) !important; line-height: 1.5 !important; margin-bottom: 20px !important; flex-grow: 1 !important; font-family: 'Inter', sans-serif !important;">Free immunization programs covering 12 vaccine-preventable diseases for children and pregnant women at government health facilities</div>
+            <button class="scheme-btn" style="background: var(--info) !important; color: white !important; border: none !important; border-radius: var(--radius-md) !important; padding: 12px 24px !important; font-size: 1rem !important; font-weight: 600 !important; cursor: pointer !important; transition: all 0.3s ease !important; width: 100% !important; font-family: 'Inter', sans-serif !important;">Ask Questions</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Government Scheme Query Modal -->
+  <div id="scheme-modal" class="scheme-modal" style="display: none;">
+    <div class="scheme-modal-content">
+      <div class="scheme-modal-header">
+        <h3 id="scheme-modal-title">Government Scheme Information</h3>
+        <button class="scheme-modal-close" onclick="closeSchemeModal()">&times;</button>
+      </div>
+      <div class="scheme-modal-body">
+        <div id="scheme-query-section">
+          <p id="scheme-description">Ask any question about this government scheme:</p>
+          <div class="scheme-query-input">
+            <textarea id="scheme-query" placeholder="e.g., How do I apply? What are the eligibility criteria? What documents do I need?" rows="3"></textarea>
+            <button id="scheme-submit" class="btn btn-primary">Get AI Information</button>
+          </div>
+        </div>
+        <div id="scheme-response-section" style="display: none;">
+          <div class="scheme-response">
+            <h4>AI Scheme Information:</h4>
+            <div id="scheme-answer" class="scheme-answer"></div>
+            <button id="scheme-ask-another" class="btn btn-outline">Ask Another Question</button>
+          </div>
+        </div>
+        <div id="scheme-loading" style="display: none;">
+          <div class="loading-spinner"></div>
+          <p>Getting AI information...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Government Scheme Modal Functions
+    let currentSchemeType = '';
+    let currentSchemeTitle = '';
+
+    function openSchemeModal(schemeType, schemeTitle) {
+      currentSchemeType = schemeType;
+      currentSchemeTitle = schemeTitle;
+      
+      document.getElementById('scheme-modal-title').textContent = schemeTitle + ' - Scheme Information';
+      document.getElementById('scheme-description').textContent = `Ask any question about ${schemeTitle}:`;
+      document.getElementById('scheme-query').value = '';
+      
+      // Show query section, hide response and loading
+      document.getElementById('scheme-query-section').style.display = 'block';
+      document.getElementById('scheme-response-section').style.display = 'none';
+      document.getElementById('scheme-loading').style.display = 'none';
+      
+      document.getElementById('scheme-modal').style.display = 'flex';
+      
+      // Focus on textarea
+      setTimeout(() => {
+        document.getElementById('scheme-query').focus();
+      }, 100);
+    }
+
+    function closeSchemeModal() {
+      document.getElementById('scheme-modal').style.display = 'none';
+    }
+
+    // Handle scheme query submission
+    document.addEventListener('DOMContentLoaded', function() {
+      const schemeSubmitBtn = document.getElementById('scheme-submit');
+      const schemeAskAnotherBtn = document.getElementById('scheme-ask-another');
+      
+      if (schemeSubmitBtn) {
+        schemeSubmitBtn.addEventListener('click', handleSchemeQuery);
+      }
+      
+      if (schemeAskAnotherBtn) {
+        schemeAskAnotherBtn.addEventListener('click', () => {
+          document.getElementById('scheme-query-section').style.display = 'block';
+          document.getElementById('scheme-response-section').style.display = 'none';
+          document.getElementById('scheme-query').value = '';
+          document.getElementById('scheme-query').focus();
+        });
+      }
+
+      // Government Schemes Click Handlers
+      const schemeItems = document.querySelectorAll('.scheme-card');
+      console.log('Found scheme items:', schemeItems.length);
+      schemeItems.forEach((item, index) => {
+        const schemeBtn = item.querySelector('.scheme-btn');
+        console.log(`Setting up click handler for scheme ${index + 1}:`, item.getAttribute('data-scheme'));
+        if (schemeBtn) {
+          schemeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const schemeType = item.getAttribute('data-scheme');
+            const schemeTitle = item.querySelector('.scheme-title').textContent;
+            console.log('Scheme clicked:', schemeType, schemeTitle);
+            openSchemeModal(schemeType, schemeTitle);
+          });
+        }
+      });
+    });
+
+    async function handleSchemeQuery() {
+      const query = document.getElementById('scheme-query').value.trim();
+      if (!query) {
+        alert('Please enter a question about the scheme.');
+        return;
+      }
+
+      // Show loading, hide other sections
+      document.getElementById('scheme-query-section').style.display = 'none';
+      document.getElementById('scheme-response-section').style.display = 'none';
+      document.getElementById('scheme-loading').style.display = 'block';
+
+      try {
+        const response = await fetch('/api/scheme-query', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            scheme: currentSchemeType,
+            schemeTitle: currentSchemeTitle,
+            query: query
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to get response from server');
+        }
+
+        const data = await response.json();
+        
+        // Show response, hide loading
+        document.getElementById('scheme-loading').style.display = 'none';
+        document.getElementById('scheme-response-section').style.display = 'block';
+        document.getElementById('scheme-answer').innerHTML = data.response || 'No response received.';
+        
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('scheme-loading').style.display = 'none';
+        document.getElementById('scheme-query-section').style.display = 'block';
+        alert('Failed to get AI response. Please try again.');
+      }
+    }
+
+    // Close modal when clicking outside
+    document.addEventListener('click', function(event) {
+      const modal = document.getElementById('scheme-modal');
+      if (event.target === modal) {
+        closeSchemeModal();
+      }
+    });
+
+  </script>
+
+  <!-- Footer -->
+  <footer style="background: var(--dark-bg); border-top: 1px solid var(--border); padding: 2rem 0; margin-top: 4rem;">
+    <div class="container">
+      <div style="text-align: center; color: var(--text-muted);">
+        <p style="margin: 0; font-size: 0.9rem; font-family: 'Inter', sans-serif;">
+          © 2024 Pocket Doctor. All rights reserved. | 
+          <a href="index.html" style="color: var(--primary); text-decoration: none; font-weight: 500;">Back to Home</a> | 
+          <a href="wellness.html" style="color: var(--primary); text-decoration: none; font-weight: 500;">Wellness Dashboard</a>
+        </p>
+        <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem; opacity: 0.7;">
+          Government health schemes information provided for educational purposes.
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

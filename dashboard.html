@@ -10,27 +10,200 @@
   <link rel="stylesheet" href="assets/css/styles.css">
   <script src="assets/js/languages.js"></script>
   <style>
-    .dash-hero { text-align: center; padding: 40px 0 10px; }
-    .dash-hero h1 { font-size: clamp(28px, 4vw, 44px); margin: 0 0 6px; }
-    .dash-hero p { color: var(--muted); margin: 0; }
-    .dash-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 22px; margin-top: 18px; }
-    .card-gradient { border: none; color: var(--text); box-shadow: var(--shadow-lg); border-radius: 18px; }
+    .dash-hero { 
+      text-align: center; 
+      padding: 60px 0 40px; 
+      background: linear-gradient(135deg, rgba(26, 167, 130, 0.1), rgba(77, 163, 255, 0.1));
+      border-radius: 24px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .dash-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+      pointer-events: none;
+    }
+    .dash-hero h1 { 
+      font-size: clamp(32px, 5vw, 48px); 
+      margin: 0 0 12px; 
+      background: linear-gradient(135deg, #1aa782, #4da3ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      z-index: 2;
+    }
+    .dash-hero p { 
+      color: var(--muted); 
+      margin: 0; 
+      font-size: 18px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .dash-grid { 
+      display: grid; 
+      grid-template-columns: 1.2fr 1fr 1fr; 
+      gap: 32px; 
+      margin-top: 0;
+    }
+    
+    .card-gradient { 
+      border: none; 
+      color: var(--text); 
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      border-radius: 24px; 
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .card-gradient:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+    }
+    .card-gradient::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+      pointer-events: none;
+    }
+    
     .grad-green { background: linear-gradient(135deg, #20c997, #2f80ed); }
     .grad-purple { background: linear-gradient(135deg, #c471f5, #fa71cd); }
     .grad-orange { background: linear-gradient(135deg, #ff7a59, #ff6b00); }
-    .score { display:flex; align-items:center; justify-content:center; height:120px; width:120px; border-radius:999px; background: rgba(255,255,255,0.22); margin: 12px 0; font-size: 36px; font-weight: 800; }
-    .pill-row { display:grid; gap:10px; }
-    .pill-row .pill-item { background: rgba(0,0,0,0.05); border-radius: 12px; padding: 14px; font-weight: 600; display:flex; align-items:center; gap:10px; color: var(--text); text-decoration: none; }
-    .pill-row .pill-item span { opacity: 0.9; }
+    
+    .score { 
+      display:flex; 
+      align-items:center; 
+      justify-content:center; 
+      height:140px; 
+      width:140px; 
+      border-radius:999px; 
+      background: rgba(255,255,255,0.25); 
+      margin: 20px auto; 
+      font-size: 42px; 
+      font-weight: 800;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255,255,255,0.2);
+      position: relative;
+      z-index: 2;
+    }
+    
+    .pill-row { 
+      display:grid; 
+      gap:16px; 
+      margin-top: 20px;
+    }
+    .pill-row .pill-item { 
+      background: rgba(255,255,255,0.15); 
+      border-radius: 16px; 
+      padding: 18px 20px; 
+      font-weight: 600; 
+      display:flex; 
+      align-items:center; 
+      gap:12px; 
+      color: var(--text); 
+      text-decoration: none;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 2;
+    }
+    .pill-row .pill-item:hover {
+      background: rgba(255,255,255,0.25);
+      transform: translateX(4px);
+    }
+    .pill-row .pill-item span { 
+      opacity: 0.95; 
+      font-size: 15px;
+    }
+
+    /* Enhanced card content */
+    .card-gradient h2 {
+      font-size: 24px;
+      margin: 0 0 20px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .card-gradient > div:not(.score):not(.pill-row) {
+      position: relative;
+      z-index: 2;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* Progress bar enhancement */
+    .progress-container {
+      background: rgba(255,255,255,0.2);
+      border-radius: 999px;
+      height: 12px;
+      margin: 20px 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+    }
+    .progress-fill {
+      height: 100%;
+      background: rgba(255,255,255,0.8);
+      border-radius: 999px;
+      transition: width 0.8s ease;
+    }
 
     /* Header: apply dark style only when dark mode is active */
-    .app-pharma.dark .qa-header { background: #1e293b; border-bottom: 1px solid #334155; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-    .app-pharma.dark .card-gradient { color: #fff; }
-    .app-pharma.dark .pill-row .pill-item { background: rgba(255,255,255,0.18); color: #fff; }
+    .app-pharma.dark .qa-header { 
+      background: #1e293b; 
+      border-bottom: 1px solid #334155; 
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3); 
+    }
+    .app-pharma.dark .card-gradient { 
+      color: #fff; 
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    .app-pharma.dark .pill-row .pill-item { 
+      background: rgba(255,255,255,0.15); 
+      color: #fff; 
+    }
+    .app-pharma.dark .card-gradient:hover {
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    }
 
     /* Responsive */
     @media (max-width: 1024px) {
-      .dash-grid { grid-template-columns: 1fr; }
+      .dash-grid { 
+        grid-template-columns: 1fr; 
+        gap: 24px;
+      }
+      .dash-hero {
+        padding: 40px 0 30px;
+        margin-bottom: 30px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .card-gradient {
+        padding: 24px;
+      }
+      .score {
+        height: 120px;
+        width: 120px;
+        font-size: 36px;
+      }
+      .pill-row .pill-item {
+        padding: 16px 18px;
+      }
     }
   </style>
 </head>
@@ -67,25 +240,60 @@
           <h2>Health Score</h2>
           <div class="score">85</div>
           <div>Excellent condition</div>
-          <div style="height:10px;background:rgba(255,255,255,0.3);border-radius:999px;margin:14px 0;">
-            <div style="height:10px;width:85%;background:#fff;border-radius:999px"></div>
+          <div class="progress-container">
+            <div class="progress-fill" style="width:85%"></div>
           </div>
           <div>Keep up the great work!</div>
         </div>
         <div class="card card-gradient grad-purple">
           <h2>Quick Actions</h2>
-          <div class="pill-row" style="margin-top:10px;">
-            <div class="pill-item">⚕️ <span>Check Symptoms</span></div>
-            <div class="pill-item">💊 <span>Medication Reminder</span></div>
-            <div class="pill-item">❤️ <span>Vital Signs</span></div>
+          <div class="pill-row">
+            <a href="checker.html" class="pill-item">⚕️ <span>Check Symptoms</span></a>
+            <a href="medications.html" class="pill-item">💊 <span>Medication Reminder</span></a>
+            <a href="wellness.html" class="pill-item">❤️ <span>Vital Signs</span></a>
           </div>
         </div>
         <div class="card card-gradient grad-orange">
           <h2>Emergency</h2>
-          <div class="pill-row" style="margin-top:10px;">
+          <div class="pill-row">
             <a class="pill-item" href="tel:112">📞 <span>Call 112</span></a>
             <a class="pill-item" href="https://www.nhp.gov.in/hospital-directory" target="_blank" rel="noopener">📍 <span>Find Hospital</span></a>
             <a class="pill-item" href="index.html#contact">👨‍⚕️ <span>Contact Doctor</span></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Additional Dashboard Sections -->
+      <div class="dash-grid" style="margin-top: 40px;">
+        <div class="card card-gradient" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+          <h2>Recent Activity</h2>
+          <div class="pill-row">
+            <div class="pill-item">📊 <span>Last Check: 2 hours ago</span></div>
+            <div class="pill-item">💊 <span>Medication: Taken</span></div>
+            <div class="pill-item">🏃 <span>Steps: 8,500 today</span></div>
+          </div>
+        </div>
+        
+        <div class="card card-gradient" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+          <h2>Health Tips</h2>
+          <div class="pill-row">
+            <div class="pill-item">💧 <span>Drink 8 glasses of water</span></div>
+            <div class="pill-item">😴 <span>Get 7-8 hours sleep</span></div>
+            <div class="pill-item">🧘 <span>Practice mindfulness</span></div>
+          </div>
+        </div>
+        
+        <div class="card card-gradient" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+          <h2>Quick Stats</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px;">
+            <div style="text-align: center; background: rgba(255,255,255,0.15); padding: 16px; border-radius: 12px;">
+              <div style="font-size: 24px; font-weight: 700;">98.6°F</div>
+              <div style="font-size: 12px; opacity: 0.9;">Temperature</div>
+            </div>
+            <div style="text-align: center; background: rgba(255,255,255,0.15); padding: 16px; border-radius: 12px;">
+              <div style="font-size: 24px; font-weight: 700;">72</div>
+              <div style="font-size: 12px; opacity: 0.9;">Heart Rate</div>
+            </div>
           </div>
         </div>
       </div>

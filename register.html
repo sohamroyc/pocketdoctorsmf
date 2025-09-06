@@ -588,9 +588,24 @@
             showNotification('Creating your account...', 'info');
             
             setTimeout(() => {
-                showNotification('Account created successfully! Redirecting to login...', 'success');
+                // Set login status and user data
+                localStorage.setItem('isLoggedIn', 'true');
+                const userData = {
+                    fullName: fullName,
+                    email: email,
+                    phone: '+91 98765 43210',
+                    age: '28',
+                    gender: 'male',
+                    bloodType: 'B+',
+                    allergies: 'None',
+                    medicalConditions: 'None',
+                    emergencyContact: 'Emergency Contact - +91 98765 43211'
+                };
+                localStorage.setItem('userData', JSON.stringify(userData));
+                
+                showNotification('Account created successfully! Redirecting to profile...', 'success');
                 setTimeout(() => {
-                    window.location.href = 'login.html';
+                    window.location.href = 'profile.html';
                 }, 1500);
             }, 2000);
         });
