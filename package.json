@@ -13,10 +13,10 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.6.1",
     "express": "^4.19.2",
-    "node-fetch": "^3.3.2"
+    "mongoose": "^8.18.0",
+    "node-fetch": "^3.3.2",
+    "prompt-sync": "^4.2.0"
   }
 }
-
-

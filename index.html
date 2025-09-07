@@ -445,54 +445,75 @@
        position: fixed;
        bottom: 5rem;
        right: 1rem;
-       width: 320px;
-       background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-       border: 1px solid #475569;
-       border-radius: 16px;
-       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+       width: 380px;
+       background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+       border: 1px solid rgba(71, 85, 105, 0.4);
+       border-radius: 20px;
+       box-shadow: 
+         0 32px 64px -12px rgba(0, 0, 0, 0.5),
+         0 0 0 1px rgba(255, 255, 255, 0.05),
+         inset 0 1px 0 rgba(255, 255, 255, 0.1);
        z-index: 10000;
        display: none;
-       backdrop-filter: blur(20px);
-       border: 1px solid rgba(71, 85, 105, 0.3);
+       backdrop-filter: blur(24px);
+       overflow: hidden;
+       transform: translateY(20px);
+       opacity: 0;
+       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+     }
+
+     .emergency-panel.show {
+       transform: translateY(0);
+       opacity: 1;
      }
 
      /* Light mode emergency panel */
      .light .emergency-panel {
-       background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-       border: 1px solid #e2e8f0;
-       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+       background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
+       border: 1px solid rgba(226, 232, 240, 0.6);
+       box-shadow: 
+         0 32px 64px -12px rgba(0, 0, 0, 0.15),
+         0 0 0 1px rgba(0, 0, 0, 0.05),
+         inset 0 1px 0 rgba(255, 255, 255, 0.8);
      }
 
     .emergency-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.25rem;
-      border-bottom: 1px solid rgba(71, 85, 105, 0.3);
-      background: linear-gradient(135deg, #334155 0%, #475569 100%);
-      border-radius: 16px 16px 0 0;
+      padding: 1.75rem 2rem;
+      border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+      background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
+      border-radius: 20px 20px 0 0;
       position: relative;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .emergency-header-left {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 1rem;
+      flex: 1;
     }
 
     .emergency-icon {
-      font-size: 1.5rem;
+      font-size: 1.75rem;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
     }
 
     .emergency-header .title {
-      font-weight: 600;
+      font-weight: 700;
       color: #f8fafc;
-      font-size: 1rem;
+      font-size: 1.125rem;
+      letter-spacing: -0.025em;
+      margin-bottom: 0.25rem;
     }
 
     .emergency-header .status {
-      color: #94a3b8;
+      color: #cbd5e1;
       font-size: 0.875rem;
+      font-weight: 500;
+      opacity: 0.9;
     }
 
     /* Light mode emergency header */
@@ -505,87 +526,120 @@
     }
 
     .emergency-close {
-      background: none;
-      border: none;
-      color: #94a3b8;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
       font-size: 1.25rem;
       cursor: pointer;
-      padding: 0.25rem;
-      border-radius: 4px;
-      transition: all 0.2s ease;
+      padding: 0.5rem;
+      border-radius: 10px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .emergency-close:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #f8fafc;
+      background: rgba(239, 68, 68, 0.2);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #ef4444;
+      transform: scale(1.05);
     }
 
     .emergency-body {
-      padding: 1rem;
+      padding: 2rem;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
     }
 
     .emergency-actions {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 1rem;
     }
 
     .emergency-action-btn {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 1rem 1.25rem;
-      border: none;
-      border-radius: 12px;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
       font-weight: 600;
-      font-size: 0.875rem;
+      font-size: 0.95rem;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       text-align: left;
       width: 100%;
       position: relative;
       overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .emergency-action-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .emergency-action-btn:hover::before {
+      left: 100%;
     }
 
     .emergency-action-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
     .whatsapp-btn {
-      background: #10b981;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
       color: white;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
     }
 
     .whatsapp-btn:hover {
-      background: #059669;
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
     }
 
     .clinic-btn {
-      background: #3b82f6;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
       color: white;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
     }
 
     .clinic-btn:hover {
-      background: #2563eb;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
     }
 
     .ambulance-btn {
-      background: #ef4444;
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
       color: white;
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
     }
 
     .ambulance-btn:hover {
-      background: #dc2626;
+      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+      box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
     }
 
     .police-btn {
-      background: #8b5cf6;
+      background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
       color: white;
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
     }
 
     .police-btn:hover {
-      background: #7c3aed;
+      background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
     }
 
          /* Clinics Panel Styles */
@@ -1252,9 +1306,10 @@
         }
         
         .emergency-panel {
-          width: 280px;
+          width: calc(100vw - 1rem);
           right: 0.5rem;
           bottom: 4rem;
+          max-width: 350px;
         }
         
         .clinics-panel {
@@ -1993,38 +2048,50 @@
   </script>
   
 
-  <!-- Small Circular Floating Action Buttons -->
-
-  <button id="chatbot-fab" class="chatbot-fab" onclick="toggleChatbot()" title="AI Health">
-    🩺
-  </button>
   
+  <!-- AI Health Assistant Button -->
+  <button id="ai-assistant-btn" class="ai-assistant-btn" title="AI Health Assistant">
+    <span class="ai-icon">🤖</span>
+    <span class="ai-text">AI Assistant</span>
+  </button>
+
   <!-- SOS Emergency Button -->
   <button id="sos-button" class="sos-emergency-btn" onclick="handleSOS()" title="Emergency SOS">
     🚨
   </button>
 
-  <!-- Chatbot Panel -->
-  <div id="chatbot-panel" class="chatbot-panel" aria-hidden="true">
-    <div class="chatbot-header">
-      <div class="chatbot-header-left">
-        <span class="robot-icon">🩺</span>
+
+  <!-- AI Assistant Chat Panel -->
+  <div id="ai-chat-panel" class="ai-chat-panel">
+    <div class="ai-chat-header">
+      <div class="ai-chat-title">
+        <span class="ai-icon">🤖</span>
         <div>
-          <div class="title">AI Health Assistant</div>
-          <div class="status">Online • Ready to help</div>
+          <h3>AI Health Assistant</h3>
+          <p>Online • Ready to help</p>
         </div>
       </div>
-      <button id="chatbot-close" class="chatbot-close">✕</button>
+      <button id="ai-chat-close" class="ai-chat-close">×</button>
     </div>
-    <div id="chatbot-body" class="chatbot-body">
-      <div class="chatbot-msg">
-        <span class="robot-icon">🩺</span>
-        <span>Hi! I'm your AI health assistant. How can I help you today? I can assist with symptom checking, health advice, medication questions, and more.</span>
+    
+    <div id="ai-chat-messages" class="ai-chat-messages">
+      <div class="ai-message">
+        <span class="ai-icon">🤖</span>
+        <div class="message-content">
+          <p>Hi! I'm your AI health assistant. I can only help with health-related questions like symptoms, medical concerns, wellness advice, and medication information. How can I assist you with your health today?</p>
+        </div>
       </div>
     </div>
-    <div class="chatbot-input">
-      <input id="chatbot-input" type="text" placeholder="Ask me anything about your health..." />
-      <button id="chatbot-send">✈️</button>
+    
+    <div class="ai-chat-input">
+      <input id="ai-chat-input" type="text" placeholder="Ask me anything about your health..." />
+      <button id="ai-chat-send" class="ai-send-btn">
+        <span>Send</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22,2 15,22 11,13 2,9"></polygon>
+        </svg>
+      </button>
     </div>
   </div>
 
@@ -2034,26 +2101,51 @@
       <div class="emergency-header-left">
         <span class="emergency-icon">🚨</span>
         <div>
-          <div class="title">Emergency SOS</div>
-          <div class="status">Quick emergency actions</div>
+          <div class="title" data-translate="sos_title">Emergency SOS</div>
+          <div class="status" data-translate="sos_subtitle">Quick emergency actions</div>
         </div>
       </div>
+      
+      <!-- Language Toggle for SOS Panel -->
+      <div class="sos-language-toggle-container">
+        <button class="lang-btn active" data-lang="en" onclick="updateSOSLanguage('en')">EN</button>
+        <button class="lang-btn" data-lang="hi" onclick="updateSOSLanguage('hi')">हिं</button>
+        <button class="lang-btn" data-lang="bn" onclick="updateSOSLanguage('bn')">বাং</button>
+      </div>
+      
       <button id="emergency-close" class="emergency-close">✕</button>
     </div>
     <div class="emergency-body">
       <div class="emergency-actions">
-        <button onclick="sendWhatsAppAlert()" class="emergency-action-btn whatsapp-btn">
+        <button onclick="sendWhatsAppAlert()" class="emergency-action-btn whatsapp-btn" data-translate="whatsapp_alert">
           📱 Message on WhatsApp
         </button>
-        <button onclick="findNearbyClinics()" class="emergency-action-btn clinic-btn">
-          🏥 Nearby Clinics
+        <button onclick="findNearbyHospitals()" class="emergency-action-btn clinic-btn" data-translate="nearby_hospitals">
+          🏥 Nearby Hospitals
         </button>
-        <button onclick="callAmbulance()" class="emergency-action-btn ambulance-btn">
+        <button onclick="callAmbulance()" class="emergency-action-btn ambulance-btn" data-translate="call_ambulance">
           🚑 Ambulance
         </button>
-        <button onclick="callPolice()" class="emergency-action-btn police-btn">
+        <button onclick="callPolice()" class="emergency-action-btn police-btn" data-translate="call_police">
           👮 Police
         </button>
+      </div>
+
+      <!-- Nearby Hospitals Section -->
+      <div id="nearby-hospitals" class="nearby-hospitals" style="display: none;">
+        <div class="nearby-header">
+          <h3 data-translate="nearby_hospitals_title">🏥 Nearby Hospitals</h3>
+          <button class="close-nearby" onclick="closeNearbyHospitals()">×</button>
+        </div>
+        <div id="location-status" class="location-status">
+          <div class="loading-location">
+            <span class="loading-spinner"></span>
+            <p data-translate="getting_location">Getting your location...</p>
+          </div>
+        </div>
+        <div id="hospitals-list" class="hospitals-list">
+          <!-- Hospitals will be populated here -->
+        </div>
       </div>
     </div>
         </div>
@@ -2077,7 +2169,9 @@
     </div>
   </div>
 
-  <script src="assets/js/chatbot.js"></script>
+
+  <!-- AI Assistant Script -->
+  <script src="assets/js/ai-assistant.js"></script>
 
   <script>
     // Emergency SOS functionality
@@ -2088,14 +2182,302 @@
       const emergencyPanel = document.getElementById('emergency-panel');
       emergencyPanel.style.display = 'block';
       emergencyPanel.setAttribute('aria-hidden', 'false');
+      
+      // Trigger animation
+      setTimeout(() => {
+        emergencyPanel.classList.add('show');
+      }, 10);
+      
       getCurrentLocation();
     }
 
     // Close emergency panel
     function closeEmergencyPanel() {
       const emergencyPanel = document.getElementById('emergency-panel');
-      emergencyPanel.style.display = 'none';
-      emergencyPanel.setAttribute('aria-hidden', 'true');
+      emergencyPanel.classList.remove('show');
+      
+      setTimeout(() => {
+        emergencyPanel.style.display = 'none';
+        emergencyPanel.setAttribute('aria-hidden', 'true');
+      }, 300);
+    }
+
+    // Find nearby hospitals function
+    async function findNearbyHospitals() {
+      console.log('🏥 Finding nearby hospitals...');
+      
+      const nearbySection = document.getElementById('nearby-hospitals');
+      const locationStatus = document.getElementById('location-status');
+      const hospitalsList = document.getElementById('hospitals-list');
+      
+      // Show the nearby hospitals section
+      nearbySection.style.display = 'block';
+      
+      // Show loading state
+      locationStatus.innerHTML = `
+        <div class="loading-location">
+          <span class="loading-spinner"></span>
+          <p>Getting your location...</p>
+        </div>
+      `;
+      
+      hospitalsList.innerHTML = '';
+      
+      try {
+        // Get user's current location
+        const position = await getCurrentLocation();
+        const { latitude, longitude } = position.coords;
+        
+        console.log('📍 Location obtained:', { latitude, longitude });
+        
+        // Update status
+        const currentLang = document.querySelector('.sos-language-toggle-container .lang-btn.active').getAttribute('data-lang');
+        const translations = sosTranslations[currentLang];
+        locationStatus.innerHTML = `
+          <div class="location-success">
+            <p>${translations.location_found}</p>
+          </div>
+        `;
+        
+        // Find nearby hospitals
+        const hospitals = await findHospitalsNearby(latitude, longitude);
+        
+        // Display hospitals
+        displayHospitals(hospitals);
+        
+      } catch (error) {
+        console.error('❌ Error finding hospitals:', error);
+        const currentLang = document.querySelector('.sos-language-toggle-container .lang-btn.active').getAttribute('data-lang');
+        const translations = sosTranslations[currentLang];
+        locationStatus.innerHTML = `
+          <div class="location-error">
+            <p>${translations.location_error}</p>
+            <button onclick="findNearbyHospitals()" class="hospital-btn">${translations.try_again}</button>
+          </div>
+        `;
+      }
+    }
+
+    // Get current location
+    function getCurrentLocation() {
+      return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) {
+          reject(new Error('Geolocation is not supported by this browser.'));
+          return;
+        }
+        
+        navigator.geolocation.getCurrentPosition(
+          (position) => resolve(position),
+          (error) => reject(error),
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 300000 // 5 minutes
+          }
+        );
+      });
+    }
+
+    // Find hospitals nearby (mock data for now)
+    async function findHospitalsNearby(lat, lng) {
+      // In a real implementation, you would use Google Places API or similar
+      // For now, we'll return mock data
+      
+      const mockHospitals = [
+        {
+          name: "City General Hospital",
+          address: "123 Main Street, Downtown",
+          distance: "0.8 km",
+          phone: "+1-555-0123",
+          rating: 4.5,
+          emergency: true
+        },
+        {
+          name: "Metro Medical Center",
+          address: "456 Health Avenue, Midtown",
+          distance: "1.2 km",
+          phone: "+1-555-0456",
+          rating: 4.3,
+          emergency: true
+        },
+        {
+          name: "Regional Hospital",
+          address: "789 Care Boulevard, Uptown",
+          distance: "2.1 km",
+          phone: "+1-555-0789",
+          rating: 4.7,
+          emergency: true
+        }
+      ];
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      return mockHospitals;
+    }
+
+    // Display hospitals in the UI
+    function displayHospitals(hospitals) {
+      const locationStatus = document.getElementById('location-status');
+      const hospitalsList = document.getElementById('hospitals-list');
+      const currentLang = document.querySelector('.sos-language-toggle-container .lang-btn.active').getAttribute('data-lang');
+      const translations = sosTranslations[currentLang];
+      
+      locationStatus.innerHTML = `
+        <div class="location-success">
+          <p>${translations.hospitals_found.replace('{count}', hospitals.length)}</p>
+        </div>
+      `;
+      
+      hospitalsList.innerHTML = hospitals.map(hospital => `
+        <div class="hospital-item">
+          <div class="hospital-name">${hospital.name}</div>
+          <div class="hospital-address">${hospital.address}</div>
+          <div class="hospital-distance">📍 ${hospital.distance} ${translations.away}</div>
+          <div class="hospital-actions">
+            <a href="tel:${hospital.phone}" class="hospital-btn call">
+              ${translations.call}
+            </a>
+            <a href="https://maps.google.com/?q=${encodeURIComponent(hospital.address)}" 
+               target="_blank" class="hospital-btn">
+              ${translations.directions}
+            </a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Close nearby hospitals section
+    function closeNearbyHospitals() {
+      const nearbySection = document.getElementById('nearby-hospitals');
+      nearbySection.style.display = 'none';
+    }
+
+    // SOS Panel Translation Objects
+    const sosTranslations = {
+      en: {
+        sos_title: "Emergency SOS",
+        sos_subtitle: "Quick emergency actions",
+        whatsapp_alert: "📱 Message on WhatsApp",
+        nearby_hospitals: "🏥 Nearby Hospitals",
+        call_ambulance: "🚑 Ambulance",
+        call_police: "👮 Police",
+        nearby_hospitals_title: "🏥 Nearby Hospitals",
+        getting_location: "Getting your location...",
+        location_found: "✅ Location found! Searching for nearby hospitals...",
+        hospitals_found: "✅ Found {count} nearby hospitals",
+        location_error: "❌ Unable to get your location. Please enable location access or try again.",
+        try_again: "Try Again",
+        call: "📞 Call",
+        directions: "🗺️ Directions",
+        away: "away"
+      },
+      hi: {
+        sos_title: "आपातकालीन SOS",
+        sos_subtitle: "त्वरित आपातकालीन कार्य",
+        whatsapp_alert: "📱 WhatsApp पर संदेश भेजें",
+        nearby_hospitals: "🏥 पास के अस्पताल",
+        call_ambulance: "🚑 एम्बुलेंस",
+        call_police: "👮 पुलिस",
+        nearby_hospitals_title: "🏥 पास के अस्पताल",
+        getting_location: "आपका स्थान प्राप्त कर रहे हैं...",
+        location_found: "✅ स्थान मिल गया! पास के अस्पताल खोज रहे हैं...",
+        hospitals_found: "✅ {count} पास के अस्पताल मिले",
+        location_error: "❌ आपका स्थान प्राप्त नहीं कर सकते। कृपया स्थान की पहुंच सक्षम करें या फिर से कोशिश करें।",
+        try_again: "फिर से कोशिश करें",
+        call: "📞 कॉल करें",
+        directions: "🗺️ दिशा-निर्देश",
+        away: "दूर"
+      },
+      bn: {
+        sos_title: "জরুরি SOS",
+        sos_subtitle: "দ্রুত জরুরি পদক্ষেপ",
+        whatsapp_alert: "📱 WhatsApp এ বার্তা পাঠান",
+        nearby_hospitals: "🏥 কাছাকাছি হাসপাতাল",
+        call_ambulance: "🚑 অ্যাম্বুলেন্স",
+        call_police: "👮 পুলিশ",
+        nearby_hospitals_title: "🏥 কাছাকাছি হাসপাতাল",
+        getting_location: "আপনার অবস্থান পাচ্ছি...",
+        location_found: "✅ অবস্থান পাওয়া গেছে! কাছাকাছি হাসপাতাল খুঁজছি...",
+        hospitals_found: "✅ {count}টি কাছাকাছি হাসপাতাল পাওয়া গেছে",
+        location_error: "❌ আপনার অবস্থান পেতে পারছি না। অনুগ্রহ করে অবস্থান অ্যাক্সেস সক্রিয় করুন বা আবার চেষ্টা করুন।",
+        try_again: "আবার চেষ্টা করুন",
+        call: "📞 কল করুন",
+        directions: "🗺️ দিকনির্দেশ",
+        away: "দূরে"
+      }
+    };
+
+    // Update SOS Panel Language
+    function updateSOSLanguage(lang) {
+      console.log('🌐 Updating SOS panel language to:', lang);
+      
+      // Update active button
+      document.querySelectorAll('.sos-language-toggle-container .lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.querySelector(`.sos-language-toggle-container .lang-btn[data-lang="${lang}"]`).classList.add('active');
+      
+      // Update all translatable elements
+      const translations = sosTranslations[lang];
+      document.querySelectorAll('#emergency-panel [data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[key]) {
+          element.textContent = translations[key];
+        }
+      });
+      
+      // Update dynamic content if nearby hospitals section is visible
+      const nearbySection = document.getElementById('nearby-hospitals');
+      if (nearbySection.style.display !== 'none') {
+        updateNearbyHospitalsLanguage(lang);
+      }
+    }
+
+    // Update nearby hospitals section language
+    function updateNearbyHospitalsLanguage(lang) {
+      const translations = sosTranslations[lang];
+      const locationStatus = document.getElementById('location-status');
+      const hospitalsList = document.getElementById('hospitals-list');
+      
+      // Update status messages
+      if (locationStatus.innerHTML.includes('Location found')) {
+        locationStatus.innerHTML = `
+          <div class="location-success">
+            <p>${translations.location_found}</p>
+          </div>
+        `;
+      } else if (locationStatus.innerHTML.includes('Found')) {
+        const count = hospitalsList.children.length;
+        locationStatus.innerHTML = `
+          <div class="location-success">
+            <p>${translations.hospitals_found.replace('{count}', count)}</p>
+          </div>
+        `;
+      } else if (locationStatus.innerHTML.includes('Unable to get')) {
+        locationStatus.innerHTML = `
+          <div class="location-error">
+            <p>${translations.location_error}</p>
+            <button onclick="findNearbyHospitals()" class="hospital-btn">${translations.try_again}</button>
+          </div>
+        `;
+      }
+      
+      // Update hospital action buttons
+      hospitalsList.querySelectorAll('.hospital-btn').forEach(btn => {
+        if (btn.textContent.includes('Call')) {
+          btn.textContent = btn.textContent.replace('📞 Call', translations.call);
+        } else if (btn.textContent.includes('Directions')) {
+          btn.textContent = btn.textContent.replace('🗺️ Directions', translations.directions);
+        }
+      });
+      
+      // Update distance text
+      hospitalsList.querySelectorAll('.hospital-distance').forEach(element => {
+        if (element.textContent.includes('away')) {
+          element.textContent = element.textContent.replace('away', translations.away);
+        }
+      });
     }
 
     // Close clinics panel
@@ -2391,5 +2773,6 @@
 
 </body>
 </html>
+
 
 

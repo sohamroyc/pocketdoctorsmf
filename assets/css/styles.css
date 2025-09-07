@@ -1181,33 +1181,519 @@ select, input[type="number"] { width: 100%; background: #0f1530; color: var(--te
   }
 }
 
-/* Chatbot */
-.chatbot-fab { position: fixed; bottom: 20px; left: 20px; z-index: 50; border-radius: 50px; padding: 14px 18px; font-weight: 700; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4); background: linear-gradient(135deg, #ff4444, #cc0000); border: none; color: white; display: inline-flex; align-items: center; gap: 10px; writing-mode: horizontal-tb; text-orientation: initial; animation: sosPulse 2s infinite; }
-.chatbot-fab:hover { filter: brightness(1.05); transform: translateY(-1px); }
-.chatbot-panel { position: fixed; bottom: 80px; left: 20px; width: 380px; max-width: min(420px, calc(100% - 60px)); background: white; border: none; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); display: none; overflow: hidden; z-index: 50; }
-.chatbot-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; background: linear-gradient(135deg, #10b981, #059669); color: white; }
-.chatbot-header-left { display: flex; align-items: center; gap: 10px; }
-.chatbot-header-left .robot-icon { font-size: 20px; }
-.chatbot-header-left .title { font-weight: 700; font-size: 16px; }
-.chatbot-header-left .status { font-size: 12px; opacity: 0.9; margin-top: 2px; }
-.chatbot-close { background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-.chatbot-close:hover { background: rgba(255,255,255,0.3); }
-.chatbot-body { height: min(60vh, 380px); overflow: auto; padding: 20px; background: #f8fafc; }
+/* Modern AI Assistant */
+.ai-assistant-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
 
-/* Motion safety */
-@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+.ai-assistant-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(16, 185, 129, 0.4);
+}
 
-/* Card polish */
-.card { position: relative; }
-.card:hover { transform: translateY(-2px); }
-.chatbot-msg { background: white; border: 1px solid #e2e8f0; padding: 12px 16px; border-radius: 18px; font-size: 14px; color: #374151; margin-bottom: 12px; display: flex; align-items: start; gap: 8px; max-width: 85%; }
-.chatbot-msg.user { justify-self: end; background: #3b82f6; color: white; border-color: #3b82f6; margin-left: auto; }
-.chatbot-msg .robot-icon { font-size: 16px; }
-.chatbot-input { display: flex; gap: 10px; padding: 16px 20px; border-top: 1px solid #e2e8f0; background: white; }
-.chatbot-input input { flex: 1; background: #f8fafc; color: #374151; border: 1px solid #e2e8f0; border-radius: 24px; padding: 12px 16px; font-size: 14px; }
-.chatbot-input input:focus { outline: none; border-color: #3b82f6; }
-.chatbot-input button { background: linear-gradient(135deg, #8b5cf6, #3b82f6); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-.chatbot-input button:hover { filter: brightness(1.1); }
+.ai-assistant-btn .ai-icon {
+  font-size: 18px;
+}
+
+.ai-chat-panel {
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
+  width: 400px;
+  max-width: calc(100vw - 40px);
+  height: 500px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  display: none;
+  flex-direction: column;
+  z-index: 1001;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ai-chat-panel.show {
+  display: flex;
+}
+
+.ai-chat-header {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ai-chat-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ai-chat-title h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.ai-chat-title p {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.ai-chat-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.ai-chat-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.ai-chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ai-message, .user-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 85%;
+}
+
+.user-message {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.message-content {
+  background: white;
+  padding: 12px 16px;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  color: #1f2937 !important;
+}
+
+.user-message .message-content {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.message-content p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1f2937 !important;
+  font-weight: 500;
+}
+
+.ai-icon {
+  font-size: 20px;
+  margin-top: 2px;
+}
+
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.typing-dots {
+  display: flex;
+  gap: 4px;
+  padding: 12px 16px;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  color: #1f2937 !important;
+}
+
+.typing-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+.typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+.typing-dots span:nth-child(3) { animation-delay: 0s; }
+
+@keyframes typing {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.ai-chat-input {
+  padding: 20px;
+  background: white;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.ai-chat-input input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 25px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.ai-chat-input input:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.ai-send-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: none;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.ai-send-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.ai-send-btn:active {
+  transform: translateY(0);
+}
+
+/* Nearby Hospitals Styles */
+.nearby-hospitals {
+  margin-top: 24px;
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.9) 0%, rgba(241, 245, 249, 0.7) 100%);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgba(226, 232, 240, 0.5);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.nearby-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+}
+
+.nearby-header h3 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.close-nearby {
+  background: #ef4444;
+  color: white;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.location-status {
+  text-align: center;
+  padding: 20px;
+}
+
+.loading-location {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #e2e8f0;
+  border-top: 3px solid #10b981;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.hospitals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hospital-item {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(226, 232, 240, 0.6);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.hospital-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #10b981, #3b82f6, #8b5cf6);
+}
+
+.hospital-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.hospital-name {
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.hospital-address {
+  color: #6b7280;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.hospital-distance {
+  color: #10b981;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.hospital-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.hospital-btn {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hospital-btn:hover {
+  background: #059669;
+}
+
+.hospital-btn.call {
+  background: #3b82f6;
+}
+
+.hospital-btn.call:hover {
+  background: #2563eb;
+}
+
+.location-error {
+  color: #ef4444;
+  text-align: center;
+  padding: 20px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+}
+
+.location-success {
+  color: #10b981;
+  text-align: center;
+  padding: 20px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+}
+
+/* SOS Language Toggle Styles */
+.sos-language-toggle-container {
+  display: flex;
+  gap: 6px;
+  margin-left: 16px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.sos-language-toggle-container .lang-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 32px;
+  text-align: center;
+}
+
+.sos-language-toggle-container .lang-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.sos-language-toggle-container .lang-btn.active {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-color: #10b981;
+  color: white;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .ai-chat-panel {
+    width: calc(100vw - 20px);
+    left: 10px;
+    right: 10px;
+    height: 60vh;
+  }
+  
+  .ai-assistant-btn {
+    left: 15px;
+    bottom: 15px;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .nearby-hospitals {
+    margin-top: 16px;
+    padding: 12px;
+  }
+
+  .hospital-item {
+    padding: 12px;
+  }
+}
+
+/* Typing indicator */
+.typing-indicator {
+  background: white !important;
+  border: 1px solid #e2e8f0 !important;
+  padding: 12px 16px !important;
+  border-radius: 18px !important;
+  font-size: 14px !important;
+  color: #374151 !important;
+  margin-bottom: 12px !important;
+  display: flex !important;
+  align-items: start !important;
+  gap: 8px !important;
+  max-width: 85% !important;
+}
+
+.typing-dots {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.typing-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #6b7280;
+  animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+.typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+.typing-dots span:nth-child(3) { animation-delay: 0s; }
+
+@keyframes typing {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
 /* Responsive Design for Health Dashboard and Login/Register */
 @media (max-width: 1024px) {
