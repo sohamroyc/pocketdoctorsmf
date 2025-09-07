@@ -85,12 +85,6 @@
 - **Google Gemini AI** - Medical analysis and insights
 - **OpenRouter API** - AI model access
 - **RESTful APIs** - Clean API architecture
-
-### Development Tools
-- **npm** - Package management
-- **Git** - Version control
-- **Vercel** - Deployment platform
-
 ---
 
 ## 🚀 Quick Start
@@ -240,22 +234,8 @@ pocket-doctor/
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
 
-1. **📤 Push to GitHub** - Commit your code to a GitHub repository
-2. **🔗 Import to Vercel** - Connect your GitHub repo to Vercel
-3. **⚙️ Set Environment Variables**:
-   - `GEMINI_API_KEY` = Your Google AI Studio API key
-4. **🚀 Deploy** - Vercel will automatically detect and deploy your Node.js app
-
-### Other Platforms
-
-| Platform | Description | Setup |
-|----------|-------------|-------|
-| **Heroku** | Cloud platform | Add `package.json` with start script |
-| **Netlify** | Static site hosting | Use serverless functions for API endpoints |
-| **Railway** | Modern cloud platform | Direct deployment with environment variables |
-=======
+#
 # Pocket Doctor 🩺
 
 A small web app to help you **check symptoms, get wellness tips, and manage medications** — built by **Team Axiom**.
@@ -527,10 +507,6 @@ This project is for **educational and personal use**. Please review all dependen
 <div align="center">
 
 **🏥 Pocket Doctor** - Your AI-powered healthcare companion ✨
-
-[![Star this repo](https://img.shields.io/badge/⭐-Star%20this%20repo-yellow.svg)](https://github.com/yourusername/pocket-doctor)
-[![Fork this repo](https://img.shields.io/badge/🍴-Fork%20this%20repo-blue.svg)](https://github.com/yourusername/pocket-doctor/fork)
-[![Contributions welcome](https://img.shields.io/badge/🤝-Contributions%20welcome-green.svg)](CONTRIBUTING.md)
 
 Made with ❤️ for better healthcare accessibility
 
