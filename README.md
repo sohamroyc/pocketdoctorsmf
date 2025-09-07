@@ -9,9 +9,6 @@
 [![License](https://img.shields.io/badge/License-Educational-yellow.svg)](LICENSE)
 
 **AI-Powered Healthcare Assistant for Instant Medical Analysis**
-
-[🚀 Live Demo](#) • [📖 Documentation](#) • [🐛 Report Bug](#) • [💡 Request Feature](#)
-
 </div>
 
 ---
